@@ -24,7 +24,7 @@ h1{margin:0;font-family:'Mountains of Christmas',cursive;color:var(--gold);text-
 .editable{outline:none}
 body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-radius:4px;cursor:text;background:rgba(242,193,78,.08)}
 .hint{font-size:11px;color:var(--muted);letter-spacing:.08em;margin:0}
-.photos{position:relative;z-index:1;padding:30px 30px 150px 0;display:flex;flex-direction:column;align-items:center;gap:20px}
+.photos{position:relative;z-index:1;padding:20px 30px 20px 0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:20px}
 .row{display:flex;gap:20px;justify-content:center}
 /* Empty slots keep a fixed size. A filled card takes the exact shape of its photo, so nothing is cut. */
 .frame{position:relative;flex:none;box-sizing:border-box;border:5px solid var(--cream);border-radius:18px;background:var(--frame);overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:15px;text-align:center;padding:0}
@@ -53,10 +53,9 @@ body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-
   .hero{zoom:.6875;width:1152px!important;height:768px!important;min-height:0!important;flex-wrap:nowrap!important;overflow:hidden;margin:0 auto}
   /* The phone-size breakpoint must not apply on paper (the printed page is narrower than 860px) */
   .info{width:380px!important;max-width:none!important;padding:40px 40px 40px 70px!important}
-  .photos{width:770px!important;flex:none!important;padding:30px 30px 150px 0!important;align-items:center!important}
+  .photos{width:770px!important;flex:none!important;padding:20px 30px 20px 0!important;justify-content:center!important;align-items:center!important}
   .row{width:740px!important;flex-wrap:nowrap!important}
-  .frame.top:not(.filled){width:360px!important;height:240px!important;aspect-ratio:auto!important}
-  .frame.big:not(.filled){width:740px!important;height:400px!important;aspect-ratio:auto!important}
+  /* card sizes come from the script, so the printout matches the screen */
   .editable{outline:none!important;background:none!important}
 }
 </style>
@@ -153,32 +152,38 @@ editables.forEach(el => {
 
 // The card takes the exact proportion of the photo, so the whole photo shows with no cut and no blur.
 // The card stays within its slot (360 x 240 for the small cards, 740 x 400 for the big one).
-function setSize(frame, w, h){
+const DEF_TOP = 1.5, DEF_BIG = 1.85; // placeholder shapes before a photo is added
+const MAX_GALLERY_H = 640;           // keeps the whole gallery on the half sheet
+
+function setCardSize(frame, w, h){
   frame.style.width = (w + 10) + 'px';   // +10 for the 5px border on each side
   frame.style.height = (h + 10) + 'px';
 }
-// The two top cards share one height and sit side by side, spanning the same 740px as the big card below.
-// Each keeps its own photo shape, so nothing is cut.
-function layoutTop(){
+
+// Lays out the whole gallery as one even block:
+// - the two top cards share one height and together span exactly the width of the big card
+// - each card keeps its photo's shape, so nothing is cut
+// - the whole block scales down if needed to fit the page
+function layoutGallery(){
   const tops = [...document.querySelectorAll('.frame.top')];
-  const ratios = tops.map(f => f._ratio || null);
-  if (ratios.every(r => r)){
-    const H = Math.min(700 / (ratios[0] + ratios[1]), 260);
-    tops.forEach((f, i) => setSize(f, H * ratios[i], H));
-  } else {
-    tops.forEach((f, i) => { if (ratios[i]) setSize(f, 230 * ratios[i], 230); });
-  }
+  const big = document.querySelector('.frame.big');
+  const rt = tops.map(f => f._ratio || DEF_TOP);
+  const rb = big._ratio || DEF_BIG;
+  const sumT = rt[0] + rt[1];
+  const Ht = 700 / sumT;               // top row photo height at scale 1
+  const k = Ht + 700 / rb;
+  const c = 40 + 30 / rb;              // borders and gap, which do not scale
+  const s = Math.min(1, (MAX_GALLERY_H - c) / k);
+  tops.forEach((f, i) => setCardSize(f, s * 700 * rt[i] / sumT, s * Ht));
+  const wb = 700 * s + 30;
+  setCardSize(big, wb, wb / rb);
 }
-function fitBig(frame, ratio){
-  let w = 730, h = w / ratio;
-  if (h > 390){ h = 390; w = h * ratio; }
-  setSize(frame, w, h);
-}
+
 function fitCard(frame, ratio){
   frame._ratio = ratio;
-  if (frame.classList.contains('big')) fitBig(frame, ratio);
-  else layoutTop();
+  layoutGallery();
 }
+layoutGallery();
 
 document.querySelectorAll('.frame').forEach(frame => {
   const input = frame.querySelector('input');
