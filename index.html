@@ -31,10 +31,14 @@ body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-
 .frame.top{width:360px;height:240px}
 .frame.big{width:740px;height:400px}
 .frame input{display:none}
-.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.frame img.main{z-index:1}
-.frame .cap{z-index:2}
-.frame .cap{position:absolute;left:0;right:0;bottom:0;padding:4px 8px;background:rgba(0,0,0,.5);font-size:12px;color:var(--cream);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* The photo fills the whole card; drag to move it and use +/- to zoom */
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;user-select:none;-webkit-user-drag:none;transform-origin:center center}
+.frame .ph{position:relative;z-index:0}
+.frame.filled .ph{display:none}
+.frame.filled{cursor:grab;touch-action:none}
+.frame.filled:active{cursor:grabbing}
+.tools{position:absolute;left:0;right:0;bottom:0;display:flex;gap:6px;justify-content:center;align-items:center;padding:6px;background:rgba(0,0,0,.55);z-index:3}
+.tools button{padding:4px 12px;font-size:12px;border-radius:6px;background:var(--gold);color:#1b1b1b;font-weight:600}
 .footer{position:relative;z-index:1;text-align:center;font-size:12px;color:var(--muted);padding:14px;letter-spacing:.08em}
 @media(max-width:860px){
   .info{width:100%;padding:30px 24px}
@@ -110,10 +114,10 @@ body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-
 
 <div class="photos">
 <div class="row">
-<label class="frame top" data-slot="0">Click to add photo<input type="file" accept="image/*"></label>
-<label class="frame top" data-slot="1">Click to add photo<input type="file" accept="image/*"></label>
+<div class="frame top" data-slot="0"><span class="ph">Click to add photo</span><input type="file" accept="image/*"></div>
+<div class="frame top" data-slot="1"><span class="ph">Click to add photo</span><input type="file" accept="image/*"></div>
 </div>
-<label class="frame big" data-slot="2">Click to add photo<input type="file" accept="image/*"></label>
+<div class="frame big" data-slot="2"><span class="ph">Click to add photo</span><input type="file" accept="image/*"></div>
 </div>
 </section>
 
@@ -152,23 +156,86 @@ editables.forEach(el => {
   });
 });
 
-// Photo frames: the frame size stays fixed; the photo fills the whole card
+// Photo frames: the frame size stays fixed; the photo fills the card.
+// Each photo keeps its own zoom (1x to 4x) and position, so the cut-off parts can be adjusted.
+const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+
+function applyTransform(frame){
+  const st = frame._state;
+  const w = frame.clientWidth, h = frame.clientHeight;
+  const mx = (st.s - 1) * w / 2, my = (st.s - 1) * h / 2;
+  st.x = clamp(st.x, -mx, mx);
+  st.y = clamp(st.y, -my, my);
+  st.img.style.transform = `translate(${st.x}px, ${st.y}px) scale(${st.s})`;
+}
+
+function zoom(frame, delta){
+  const st = frame._state;
+  st.s = clamp(st.s + delta, 1, 4);
+  applyTransform(frame);
+}
+
 document.querySelectorAll('.frame').forEach(frame => {
   const input = frame.querySelector('input');
+  frame._state = { s: 1, x: 0, y: 0, img: null };
+  let drag = null;
+
+  // Empty frame: click to choose a photo (a filled frame is adjusted instead)
+  frame.addEventListener('click', () => {
+    if (frame.classList.contains('filled')) return;
+    input.click();
+  });
+
   input.addEventListener('change', e => {
     const file = e.target.files[0];
     if (!file) return;
-    frame.querySelectorAll('img,.cap').forEach(n => n.remove());
+    frame.querySelectorAll('img,.tools').forEach(n => n.remove());
     const img = document.createElement('img');
-    img.className = 'main';
     img.alt = file.name;
+    img.draggable = false;
     img.src = URL.createObjectURL(file);
     frame.insertBefore(img, input);
-    const cap = document.createElement('div');
-    cap.className = 'cap';
-    cap.textContent = file.name.replace(/\.[^.]+$/, '');
-    frame.appendChild(cap);
+    const tools = document.createElement('div');
+    tools.className = 'tools noprint';
+    tools.innerHTML = '<button type="button" data-act="out" aria-label="Zoom out">&minus;</button><button type="button" data-act="in" aria-label="Zoom in">+</button><button type="button" data-act="reset">Reset</button>';
+    frame.appendChild(tools);
+    frame.classList.add('filled');
+    frame._state = { s: 1, x: 0, y: 0, img };
+    applyTransform(frame);
   });
+
+  // Zoom buttons
+  frame.addEventListener('click', e => {
+    const act = e.target.dataset && e.target.dataset.act;
+    if (!act) return;
+    const st = frame._state;
+    if (act === 'in') zoom(frame, 0.2);
+    if (act === 'out') zoom(frame, -0.2);
+    if (act === 'reset') { st.s = 1; st.x = 0; st.y = 0; applyTransform(frame); }
+  });
+
+  // Drag to move the photo
+  frame.addEventListener('pointerdown', e => {
+    if (!frame.classList.contains('filled') || e.target.closest('.tools')) return;
+    drag = { x0: e.clientX, y0: e.clientY, sx: frame._state.x, sy: frame._state.y };
+    frame.setPointerCapture(e.pointerId);
+  });
+  frame.addEventListener('pointermove', e => {
+    if (!drag) return;
+    frame._state.x = drag.sx + (e.clientX - drag.x0);
+    frame._state.y = drag.sy + (e.clientY - drag.y0);
+    applyTransform(frame);
+  });
+  const endDrag = () => { drag = null; };
+  frame.addEventListener('pointerup', endDrag);
+  frame.addEventListener('pointercancel', endDrag);
+
+  // Mouse wheel to zoom
+  frame.addEventListener('wheel', e => {
+    if (!frame.classList.contains('filled')) return;
+    e.preventDefault();
+    zoom(frame, e.deltaY < 0 ? 0.1 : -0.1);
+  }, { passive: false });
 });
 </script>
 </body>
