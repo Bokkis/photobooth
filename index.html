@@ -17,7 +17,7 @@ button.ghost{background:transparent;color:var(--cream);border:1px solid var(--go
 /* Half-sheet layout: text on the left, photo grid on the right (1152 x 768 design) */
 .hero{position:relative;display:flex;justify-content:center;align-items:center;gap:40px;min-height:calc(100vh - 60px);overflow:hidden}
 .bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.info{position:relative;z-index:1;width:460px;padding:40px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
+.info{position:relative;z-index:1;width:440px;padding:40px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
 .cinz{font-family:Cinzel,serif}
 h1{margin:0;font-family:'Mountains of Christmas',cursive;color:var(--gold);text-shadow:0 3px 0 #7a1212;font-weight:700}
 .dept{margin:6px 0 0;font-family:Cinzel,serif;font-size:20px;font-weight:600;letter-spacing:.12em;color:var(--cream);min-height:28px;outline:none}
@@ -27,12 +27,12 @@ h1{margin:0;font-family:'Mountains of Christmas',cursive;color:var(--gold);text-
 body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-radius:4px;cursor:text;background:rgba(242,193,78,.08)}
 .hint{font-size:11px;color:var(--muted);letter-spacing:.08em;margin:0}
 
-.photos{position:relative;z-index:1;width:520px;display:flex;flex-direction:column;gap:20px;padding:20px 0}
-.row{display:grid;grid-template-columns:250px 250px;gap:20px;justify-content:center}
+.photos{position:relative;z-index:1;width:640px;display:flex;flex-direction:column;gap:16px;padding:16px 0}
+.row{display:grid;grid-template-columns:310px 310px;gap:20px;justify-content:center}
 /* Every card has the same size; the photo fills the card */
 .frame{position:relative;display:block;overflow:hidden;border:5px solid var(--cream);border-radius:18px;background:var(--frame);cursor:pointer;color:var(--muted);font-size:15px;text-align:center}
-.frame.top{width:250px;height:326px}
-.frame.big{width:520px;height:382px}
+.frame.top{width:310px;height:340px}
+.frame.big{width:640px;height:380px}
 .frame input{display:none}
 .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
 .frame .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
