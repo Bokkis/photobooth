@@ -26,17 +26,16 @@ h1,h2{margin:0;font-family:'Mountains of Christmas',cursive;color:var(--gold);te
 body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-radius:4px;cursor:text;background:rgba(242,193,78,.08)}
 .hint{font-size:11px;color:var(--muted);letter-spacing:.08em;margin:0}
 .photos{position:relative;z-index:1;flex:1;min-width:320px;padding:30px 30px 150px 0;display:flex;flex-direction:column;gap:20px}
-.row{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;justify-content:center}
-/* Photo frames: white border, photo fills the whole frame (no blur, no side bars) */
-.frame{position:relative;flex:1;min-width:240px;border:5px solid #fff;border-radius:18px;background:var(--frame);overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:15px}
-.frame.top{height:236px}
-.frame.big{width:100%;height:380px}
-.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+/* Photo frames: white border; frame takes the photo's own shape (portrait works), whole photo visible, no blur, no crop */
+.frame{position:relative;width:100%;aspect-ratio:3/4;border:5px solid #fff;border-radius:18px;background:var(--frame);overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--muted);font-size:15px}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
 .frame input{display:none}
-.frame .cap{position:absolute;left:0;right:0;bottom:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.65));font-size:12px;color:#fff;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.frame .cap{position:absolute;left:0;right:0;bottom:0;padding:18px 10px 6px;background:linear-gradient(transparent,rgba(0,0,0,.7));font-size:12px;color:#fff;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .frame.filled{font-size:0}
 .footer{position:relative;z-index:1;text-align:center;font-size:12px;color:var(--muted);padding:14px;letter-spacing:.08em}
-@media(max-width:860px){.info{width:100%;padding:30px 24px}.photos{padding:10px 24px 40px}.frame.top{height:200px}.frame.big{height:280px}}
+@media(max-width:860px){.info{width:100%;padding:30px 24px}.photos{padding:10px 24px 40px}}
+@media(max-width:560px){.pgrid{grid-template-columns:repeat(2,1fr);gap:12px}}
 </style>
 </head>
 <body>
@@ -84,11 +83,11 @@ body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-
 </div>
 
 <div class="photos">
-<div class="row" style="flex-wrap:nowrap">
-<label class="frame top" data-slot="0">Click to add photo<input type="file" accept="image/*"></label>
-<label class="frame top" data-slot="1">Click to add photo<input type="file" accept="image/*"></label>
+<div class="pgrid">
+<label class="frame" data-slot="0">Click to add photo<input type="file" accept="image/*"></label>
+<label class="frame" data-slot="1">Click to add photo<input type="file" accept="image/*"></label>
+<label class="frame" data-slot="2">Click to add photo<input type="file" accept="image/*"></label>
 </div>
-<label class="frame big" data-slot="2">Click to add photo<input type="file" accept="image/*"></label>
 </div>
 </section>
 
@@ -137,6 +136,7 @@ document.querySelectorAll('.frame').forEach(frame => {
     const img = document.createElement('img');
     img.alt = file.name;
     img.src = URL.createObjectURL(file);
+    img.onload = () => { frame.style.aspectRatio = img.naturalWidth + ' / ' + img.naturalHeight; };
     frame.classList.add('filled');
     frame.insertBefore(img, input);
     const cap = document.createElement('div');
