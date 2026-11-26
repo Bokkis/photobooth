@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Yuval Trucking Christmas Party 2026</title>
+<title>Yuval Trucking Christmas Party 2026 (Website)</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Mountains+of+Christmas:wght@700&family=Poppins:wght@400;600&display=swap">
 <style>
 :root{--gold:#f2c14e;--gold2:#c9a54a;--cream:#f6e7b4;--muted:#c9d8c2;--red:#c62828;--bg:#0b2418;--frame:#123524}
@@ -13,63 +13,38 @@ nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-
 nav .brand{font-family:Cinzel,serif;color:var(--gold);letter-spacing:.1em;font-weight:700}
 button{font:inherit;cursor:pointer;border:0;border-radius:999px;padding:9px 16px;background:var(--gold);color:#1b1b1b;font-weight:600}
 button.ghost{background:transparent;color:var(--cream);border:1px solid var(--gold2)}
-.hero{position:relative;display:flex;flex-wrap:wrap;justify-content:center;min-height:calc(100vh - 60px);overflow:hidden}
+.hero{position:relative;display:flex;flex-wrap:wrap;min-height:calc(100vh - 60px);overflow:hidden}
 .bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .info{position:relative;z-index:1;width:380px;max-width:100%;padding:40px 40px 40px 70px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
+.info .k{margin:0;font-size:13px;letter-spacing:.2em;color:var(--cream)}
 .cinz{font-family:Cinzel,serif}
-h1{margin:0;font-family:'Mountains of Christmas',cursive;color:var(--gold);text-shadow:0 3px 0 #7a1212;font-weight:700}
+h1,h2{margin:0;font-family:'Mountains of Christmas',cursive;color:var(--gold);text-shadow:0 3px 0 #7a1212;font-weight:700}
 .dept{margin:6px 0 0;font-family:Cinzel,serif;font-size:22px;font-weight:600;letter-spacing:.12em;color:var(--cream);min-height:30px;outline:none}
 .plaque{margin-top:12px;padding:8px 28px;border:2px solid var(--gold2);border-radius:8px;background:var(--bg)}
 .plaque span{font-family:Cinzel,serif;font-size:26px;font-weight:700;letter-spacing:.25em;color:var(--gold2);text-shadow:0 1px 0 rgba(255,255,255,.35),0 -1px 0 rgba(0,0,0,.8);outline:none}
 .editable{outline:none}
 body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-radius:4px;cursor:text;background:rgba(242,193,78,.08)}
 .hint{font-size:11px;color:var(--muted);letter-spacing:.08em;margin:0}
-.photos{position:relative;z-index:1;padding:30px 30px 150px 0;display:flex;flex-direction:column;align-items:center;gap:20px}
-.row{display:flex;gap:20px;justify-content:center}
-/* Fixed frame sizes: the template never resizes when a photo is uploaded */
-.frame{position:relative;flex:none;box-sizing:border-box;border:5px solid var(--cream);border-radius:18px;background:var(--frame);overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:15px;text-align:center;padding:10px}
-.frame.top{width:360px;height:240px}
-.frame.big{width:740px;height:400px}
+.photos{position:relative;z-index:1;flex:1;min-width:320px;padding:30px 30px 150px 0;display:flex;flex-direction:column;gap:20px}
+.row{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;justify-content:center}
+/* Photo frames: white border, photo fills the whole frame (no blur, no side bars) */
+.frame{position:relative;flex:1;min-width:240px;border:5px solid #fff;border-radius:18px;background:var(--frame);overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:15px}
+.frame.top{height:236px}
+.frame.big{width:100%;height:380px}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block}
 .frame input{display:none}
-.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-/* Blurred copy of the same photo fills the empty side/top areas; the sharp photo stays whole (not cropped) */
-.frame img.bgfill{object-fit:cover;filter:blur(16px);transform:scale(1.15);opacity:.85;z-index:0}
-.frame img.main{z-index:1}
-.frame .cap{z-index:2}
-.frame .cap{position:absolute;left:0;right:0;bottom:0;padding:4px 8px;background:rgba(0,0,0,.5);font-size:12px;color:var(--cream);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.frame .cap{position:absolute;left:0;right:0;bottom:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.65));font-size:12px;color:#fff;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.frame.filled{font-size:0}
 .footer{position:relative;z-index:1;text-align:center;font-size:12px;color:var(--muted);padding:14px;letter-spacing:.08em}
-@media(max-width:860px){
-  .info{width:100%;padding:30px 24px}
-  .photos{padding:10px 16px 40px;width:100%}
-  .row{width:100%;flex-wrap:wrap}
-  .frame.top{width:calc(50% - 10px);height:auto;aspect-ratio:3/2}
-  .frame.big{width:100%;height:auto;aspect-ratio:37/20}
-}
-/* Print / Save as PDF: one half sheet of short bond paper (8.5 x 5.5 in, landscape) */
-@page{size:8.5in 5.5in landscape;margin:0}
-@media print{
-  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  html,body{width:8.5in;height:5.5in;margin:0;overflow:hidden;background:var(--bg)}
-  .noprint{display:none!important}
-  .hero{zoom:.6875;width:1152px!important;height:768px!important;min-height:0!important;flex-wrap:nowrap!important;overflow:hidden;margin:0 auto}
-  /* The phone-size breakpoint must not apply on paper (the printed page is narrower than 860px) */
-  .info{width:380px!important;max-width:none!important;padding:40px 40px 40px 70px!important}
-  .photos{width:770px!important;flex:none!important;padding:30px 30px 150px 0!important;align-items:center!important}
-  .row{width:740px!important;flex-wrap:nowrap!important}
-  .frame.top{width:360px!important;height:240px!important;aspect-ratio:auto!important}
-  .frame.big{width:740px!important;height:400px!important;aspect-ratio:auto!important}
-  .editable{outline:none!important;background:none!important}
-}
+@media(max-width:860px){.info{width:100%;padding:30px 24px}.photos{padding:10px 24px 40px}.frame.top{height:200px}.frame.big{height:280px}}
 </style>
 </head>
 <body>
-<nav class="noprint">
+<nav>
 <div class="brand">YUVAL TRUCKING SERVICES</div>
 <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
 <span style="font-size:13px;color:var(--muted)" id="modeLabel">View mode</span>
 <button class="ghost" id="editBtn">Edit details</button>
-<button class="ghost" onclick="window.print()">Print</button>
-<button onclick="window.print()">Download PDF</button>
 </div>
 </nav>
 
@@ -96,8 +71,8 @@ body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-
 </svg>
 
 <div class="info">
-<p class="cinz" style="margin:0;font-size:30px;font-weight:700;color:var(--gold)">MERRY CHRISTMAS</p>
-<p style="margin:0;font-size:13px;letter-spacing:.2em">&amp; HAPPY NEW YEAR</p>
+<p class="k cinz" style="margin:0;font-size:30px;font-weight:700;color:var(--gold)">MERRY CHRISTMAS</p>
+<p class="k" style="font-size:13px">&amp; HAPPY NEW YEAR</p>
 <p class="cinz" style="margin:22px 0 0;font-size:24px;font-weight:600;letter-spacing:.12em">Yuval Trucking</p>
 <p class="dept editable" id="dept" contenteditable="false" data-key="dept" data-default="Department name">Department name</p>
 <h1 style="font-size:80px;line-height:.95">Christmas</h1>
@@ -109,7 +84,7 @@ body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-
 </div>
 
 <div class="photos">
-<div class="row">
+<div class="row" style="flex-wrap:nowrap">
 <label class="frame top" data-slot="0">Click to add photo<input type="file" accept="image/*"></label>
 <label class="frame top" data-slot="1">Click to add photo<input type="file" accept="image/*"></label>
 </div>
@@ -117,7 +92,7 @@ body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-
 </div>
 </section>
 
-<footer class="footer noprint">Yuval Trucking Services &middot; Christmas Party 2026</footer>
+<footer class="footer">Yuval Trucking Services &middot; Christmas Party 2026</footer>
 
 <script>
 const editBtn = document.getElementById('editBtn');
@@ -152,23 +127,17 @@ editables.forEach(el => {
   });
 });
 
-// Photo frames: the frame size stays fixed; the whole photo fits inside it without cropping
+// Photo frames: click to choose an image for that spot
 document.querySelectorAll('.frame').forEach(frame => {
   const input = frame.querySelector('input');
   input.addEventListener('change', e => {
     const file = e.target.files[0];
     if (!file) return;
     frame.querySelectorAll('img,.cap').forEach(n => n.remove());
-    const url = URL.createObjectURL(file);
-    const bg = document.createElement('img');
-    bg.className = 'bgfill';
-    bg.alt = '';
-    bg.src = url;
-    frame.insertBefore(bg, input);
     const img = document.createElement('img');
-    img.className = 'main';
     img.alt = file.name;
-    img.src = url;
+    img.src = URL.createObjectURL(file);
+    frame.classList.add('filled');
     frame.insertBefore(img, input);
     const cap = document.createElement('div');
     cap.className = 'cap';
