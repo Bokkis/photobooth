@@ -15,7 +15,7 @@ button{font:inherit;cursor:pointer;border:0;border-radius:999px;padding:9px 16px
 button.ghost{background:transparent;color:var(--cream);border:1px solid var(--gold2)}
 .hero{position:relative;display:flex;flex-wrap:wrap;justify-content:center;min-height:calc(100vh - 60px);overflow:hidden}
 .bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.info{position:relative;z-index:1;width:310px;max-width:100%;padding:40px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
+.info{position:relative;z-index:1;width:310px;max-width:100%;padding:40px 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
 .cinz{font-family:Cinzel,serif}
 h1{margin:0;font-family:'Mountains of Christmas',cursive;color:var(--gold);text-shadow:0 3px 0 #7a1212;font-weight:700}
 .dept{margin:6px 0 0;font-family:Cinzel,serif;font-size:22px;font-weight:600;letter-spacing:.12em;color:var(--cream);min-height:30px;outline:none}
@@ -24,7 +24,7 @@ h1{margin:0;font-family:'Mountains of Christmas',cursive;color:var(--gold);text-
 .editable{outline:none}
 body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-radius:4px;cursor:text;background:rgba(242,193,78,.08)}
 .hint{font-size:11px;color:var(--muted);letter-spacing:.08em;margin:0}
-.photos{position:relative;z-index:1;padding:10px 10px 10px 0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:20px}
+.photos{position:relative;z-index:1;padding:39px 10px 39px 0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:20px}
 .row{display:flex;gap:20px;justify-content:center}
 /* Empty slots keep a fixed size. A filled card takes the exact shape of its photo, so nothing is cut. */
 .frame{position:relative;flex:none;box-sizing:border-box;border:5px solid var(--cream);border-radius:18px;background:var(--frame);overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:15px;text-align:center;padding:0}
@@ -52,8 +52,8 @@ body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-
   .noprint{display:none!important}
   .hero{zoom:.6875;width:1152px!important;height:768px!important;min-height:0!important;flex-wrap:nowrap!important;overflow:hidden;margin:0 auto}
   /* The phone-size breakpoint must not apply on paper (the printed page is narrower than 860px) */
-  .info{width:310px!important;max-width:none!important;padding:40px 12px!important}
-  .photos{width:auto!important;flex:none!important;padding:10px 0 10px 0!important;justify-content:center!important;align-items:center!important}
+  .info{width:310px!important;max-width:none!important;padding:40px 16px!important}
+  .photos{width:auto!important;flex:none!important;padding:39px 10px 39px 0!important;justify-content:center!important;align-items:center!important}
   .row{width:auto!important;flex-wrap:nowrap!important}
   /* card sizes come from the script, so the printout matches the screen */
   .editable{outline:none!important;background:none!important}
@@ -94,12 +94,12 @@ body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-
 </svg>
 
 <div class="info">
-<p class="cinz" style="margin:0;font-size:30px;font-weight:700;color:var(--gold)">MERRY CHRISTMAS</p>
+<p class="cinz" style="margin:0;font-size:26px;font-weight:700;color:var(--gold)">MERRY CHRISTMAS</p>
 <p style="margin:0;font-size:13px;letter-spacing:.2em">&amp; HAPPY NEW YEAR</p>
-<p class="cinz" style="margin:22px 0 0;font-size:24px;font-weight:600;letter-spacing:.12em">Yuval Trucking</p>
+<p class="cinz" style="margin:22px 0 0;font-size:20px;font-weight:600;letter-spacing:.12em">Yuval Trucking</p>
 <p class="dept editable" id="dept" contenteditable="false" data-key="dept" data-default="Department name">Department name</p>
-<h1 style="font-size:80px;line-height:.95">Christmas</h1>
-<h1 style="font-size:66px;line-height:1">Party</h1>
+<h1 style="font-size:60px;line-height:.95">Christmas</h1>
+<h1 style="font-size:50px;line-height:1">Party</h1>
 <p class="cinz" style="margin:8px 0 0;font-size:30px;font-weight:700;letter-spacing:.1em">2026</p>
 <p class="editable" id="partyDate" contenteditable="false" data-key="partyDate" data-default="December 13, 2026" style="margin:0;font-size:18px">December 13, 2026</p>
 <div class="plaque"><span class="editable" id="plaque" contenteditable="false" data-key="plaque" data-default="ALMAS">ALMAS</span></div>
@@ -153,7 +153,7 @@ editables.forEach(el => {
 // The card takes the exact proportion of the photo, so the whole photo shows with no cut and no blur.
 // The card stays within its slot (360 x 240 for the small cards, 740 x 400 for the big one).
 const DEF_TOP = 1.5, DEF_BIG = 1.85; // placeholder shapes before a photo is added
-const MAX_GALLERY_H = 748;           // keeps the whole gallery on the half sheet
+const MAX_GALLERY_H = 690;           // keeps the whole gallery on the half sheet, with even space above and below
 
 function setCardSize(frame, w, h){
   frame.style.width = (w + 10) + 'px';   // +10 for the 5px border on each side
