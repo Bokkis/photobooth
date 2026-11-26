@@ -27,16 +27,53 @@ h1{margin:0;font-family:'Mountains of Christmas',cursive;color:var(--gold);text-
 body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-radius:4px;cursor:text;background:rgba(242,193,78,.08)}
 .hint{font-size:11px;color:var(--muted);letter-spacing:.08em;margin:0}
 
-.photos{position:relative;z-index:1;width:640px;display:flex;flex-direction:column;gap:16px;padding:16px 0}
+.photos{position:relative;z-index:1;width:640px;display:flex;flex-direction:column;gap:16px;padding:40px 0 16px}
 .row{display:grid;grid-template-columns:310px 310px;gap:20px;justify-content:center}
 /* Every card has the same size; the photo fills the card */
 .frame{position:relative;display:block;overflow:hidden;border:5px solid var(--cream);border-radius:18px;background:var(--frame);cursor:pointer;color:var(--muted);font-size:15px;text-align:center}
-.frame.top{width:310px;height:340px}
-.frame.big{width:640px;height:380px}
+.frame.top{width:310px;height:320px}
+.frame.big{width:640px;height:360px}
 .frame input{display:none}
 .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
 .frame .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
 .frame.filled .ph{display:none}
+
+/* Christian border: gold inner line, crosses at the corners, a cross at the top and an ichthys fish at the bottom */
+.frame{--bulbs:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52 14'%3E%3Cpath d='M0 3H52' stroke='%238a7a3a' stroke-width='1.2' fill='none'/%3E%3Ccircle cx='13' cy='7' r='3.2' fill='%23e53935'/%3E%3Ccircle cx='39' cy='7' r='3.2' fill='%23ffd54f'/%3E%3Ccircle cx='12' cy='6' r='1' fill='%23ffffff' opacity='.7'/%3E%3Ccircle cx='38' cy='6' r='1' fill='%23ffffff' opacity='.7'/%3E%3C/svg%3E");--star:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 1L12.4 7.2L19 7.6L13.9 11.8L15.6 18.4L10 14.6L4.4 18.4L6.1 11.8L1 7.6L7.6 7.2Z' fill='%23f2c14e'/%3E%3C/svg%3E");--cross:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 1h4v7h7v4h-7v11h-4V12H3V8h7z' fill='%23f2c14e'/%3E%3C/svg%3E");--fish:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 22'%3E%3Cpath d='M24 11L33 3L30 11L33 19Z' fill='%23f2c14e'/%3E%3Cpath d='M2 11Q12 -1 24 11Q12 23 2 11Z' fill='%23f2c14e'/%3E%3Ccircle cx='9' cy='10' r='1.3' fill='%230b2418'/%3E%3C/svg%3E")}
+.frame::before{content:"";position:absolute;inset:9px;border:1.5px solid rgba(242,193,78,.75);border-radius:12px;pointer-events:none;z-index:2;background:var(--bulbs) repeat-x center 3px / 52px 14px,var(--bulbs) repeat-x center bottom 3px / 52px 14px}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;filter:drop-shadow(0 1px 2px rgba(0,0,0,.7));
+background:
+  var(--cross) no-repeat left 14px top 14px / 26px 26px,
+  var(--cross) no-repeat right 14px top 14px / 26px 26px,
+  var(--cross) no-repeat left 14px bottom 14px / 26px 26px,
+  var(--cross) no-repeat right 14px bottom 14px / 26px 26px,
+  var(--cross) no-repeat center top 12px / 22px 22px,
+  var(--fish) no-repeat center bottom 10px / 34px 22px,
+  var(--star) no-repeat 25% 8px / 14px 14px,
+  var(--star) no-repeat 75% 8px / 14px 14px,
+  var(--star) no-repeat 25% calc(100% - 8px) / 14px 14px,
+  var(--star) no-repeat 75% calc(100% - 8px) / 14px 14px,
+  var(--star) no-repeat 7px 50% / 12px 12px,
+  var(--star) no-repeat right 7px top 50% / 12px 12px}
+
+/* Reindeer border (switch with the Border button): red dashed line, reindeer head at the top, antlers at the top corners, snowflakes at the bottom corners and a jingle bell at the bottom */
+body.border-reindeer .frame{--earL:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Cpath d='M2 8Q8 0 22 4Q14 8 22 12Q8 16 2 8Z' fill='%23c8925a'/%3E%3Cpath d='M6 8Q10 5 18 6Q13 8 18 10Q10 11 6 8Z' fill='%23f2c9a0'/%3E%3C/svg%3E");--earR:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Cg transform='matrix(-1 0 0 1 24 0)'%3E%3Cpath d='M2 8Q8 0 22 4Q14 8 22 12Q8 16 2 8Z' fill='%23c8925a'/%3E%3Cpath d='M6 8Q10 5 18 6Q13 8 18 10Q10 11 6 8Z' fill='%23f2c9a0'/%3E%3C/g%3E%3C/svg%3E");--holly:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2L15 7L21 6L18 11L23 14L17 15L16 21L12 18L8 21L7 15L1 14L6 11L3 6L9 7Z' fill='%232e7d4f' stroke='%23134a30' stroke-width='.8'/%3E%3Ccircle cx='9' cy='13' r='1.8' fill='%23c62828'/%3E%3Ccircle cx='15' cy='13' r='1.8' fill='%23c62828'/%3E%3C/svg%3E");--antlerL:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Cpath d='M5 25Q6 13 15 5M9 15Q4 13 2 8M12 10Q17 9 21 3M8 20Q13 20 17 17' fill='none' stroke='%23f2c14e' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");--antlerR:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Cg transform='matrix(-1 0 0 1 26 0)'%3E%3Cpath d='M5 25Q6 13 15 5M9 15Q4 13 2 8M12 10Q17 9 21 3M8 20Q13 20 17 17' fill='none' stroke='%23f2c14e' stroke-width='2.2' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E");--head:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23f2c14e' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M15 15Q13 9 14 3M14 8L9 4M13 11L8 10M25 15Q27 9 26 3M26 8L31 4M27 11L32 10'/%3E%3C/g%3E%3Cellipse cx='10' cy='18' rx='4.5' ry='2.4' transform='rotate(-30 10 18)' fill='%23c8925a'/%3E%3Cellipse cx='30' cy='18' rx='4.5' ry='2.4' transform='rotate(30 30 18)' fill='%23c8925a'/%3E%3Cellipse cx='20' cy='24' rx='8' ry='10' fill='%23c8925a'/%3E%3Ccircle cx='16.5' cy='21.5' r='1.5' fill='%230b2418'/%3E%3Ccircle cx='23.5' cy='21.5' r='1.5' fill='%230b2418'/%3E%3Ccircle cx='20' cy='31' r='2.8' fill='%23c62828'/%3E%3C/svg%3E");--snow:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12 2V22M3.3 7L20.7 17M20.7 7L3.3 17M9 4L12 6L15 4M9 20L12 18L15 20'/%3E%3C/g%3E%3C/svg%3E");--bell:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='3' r='1.8' fill='%23f2c14e'/%3E%3Cpath d='M12 5C8 5 6.5 8 6.5 12L5 17H19L17.5 12C17.5 8 16 5 12 5Z' fill='%23f2c14e'/%3E%3Crect x='4' y='17' width='16' height='2.2' rx='1' fill='%23c9a54a'/%3E%3Ccircle cx='12' cy='21' r='2' fill='%23c62828'/%3E%3C/svg%3E")}
+body.border-reindeer .frame::before{border:1.5px dashed rgba(229,57,53,.85)}
+body.border-reindeer .frame::after{background:
+  var(--earL) no-repeat calc(50% - 34px) 14px / 24px 16px,
+  var(--earR) no-repeat calc(50% + 34px) 14px / 24px 16px,
+  var(--antlerL) no-repeat left 12px top 12px / 28px 28px,
+  var(--antlerR) no-repeat right 12px top 12px / 28px 28px,
+  var(--head) no-repeat center top 6px / 36px 36px,
+  var(--snow) no-repeat left 14px bottom 14px / 22px 22px,
+  var(--snow) no-repeat right 14px bottom 14px / 22px 22px,
+  var(--bell) no-repeat center bottom 8px / 24px 24px,
+  var(--holly) no-repeat 25% 8px / 24px 24px,
+  var(--holly) no-repeat 75% 8px / 24px 24px,
+  var(--holly) no-repeat 25% calc(100% - 8px) / 24px 24px,
+  var(--holly) no-repeat 75% calc(100% - 8px) / 24px 24px,
+  var(--star) no-repeat 7px 50% / 12px 12px,
+  var(--star) no-repeat right 7px top 50% / 12px 12px}
 
 .footer{position:relative;z-index:1;text-align:center;font-size:12px;color:var(--muted);padding:14px;letter-spacing:.08em}
 
@@ -68,6 +105,7 @@ body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-
 <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
 <span style="font-size:13px;color:var(--muted)" id="modeLabel">View mode</span>
 <button class="ghost" id="editBtn">Edit details</button>
+<button class="ghost" id="borderBtn">Border: Christian</button>
 <button class="ghost" onclick="window.print()">Print</button>
 <button onclick="window.print()">Download PDF</button>
 </div>
@@ -83,6 +121,78 @@ body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-
 <circle cx="36" cy="22" r="5" fill="#f2c14e"/><circle cx="108" cy="22" r="5" fill="#c62828"/><circle cx="180" cy="22" r="5" fill="#fff"/><circle cx="252" cy="22" r="5" fill="#4fc3f7"/><circle cx="324" cy="22" r="5" fill="#f2c14e"/><circle cx="396" cy="22" r="5" fill="#c62828"/><circle cx="468" cy="22" r="5" fill="#fff"/><circle cx="540" cy="22" r="5" fill="#4fc3f7"/><circle cx="612" cy="22" r="5" fill="#f2c14e"/><circle cx="684" cy="22" r="5" fill="#c62828"/><circle cx="756" cy="22" r="5" fill="#fff"/><circle cx="828" cy="22" r="5" fill="#4fc3f7"/><circle cx="900" cy="22" r="5" fill="#f2c14e"/><circle cx="972" cy="22" r="5" fill="#c62828"/><circle cx="1044" cy="22" r="5" fill="#fff"/><circle cx="1116" cy="22" r="5" fill="#4fc3f7"/>
 </g>
 <rect x="0" y="744" width="1152" height="24" fill="#06150e"/>
+<!-- ornaments hanging from the string lights -->
+<g stroke="#f2c14e" stroke-width="2"><line x1="150" y1="22" x2="150" y2="46"/><line x1="330" y1="22" x2="330" y2="40"/><line x1="510" y1="22" x2="510" y2="46"/><line x1="690" y1="22" x2="690" y2="40"/><line x1="870" y1="22" x2="870" y2="46"/><line x1="1050" y1="22" x2="1050" y2="40"/></g>
+<circle cx="150" cy="60" r="13" fill="#c62828"/><circle cx="330" cy="54" r="11" fill="#f2c14e"/><circle cx="510" cy="60" r="13" fill="#fff"/><circle cx="690" cy="54" r="11" fill="#4fc3f7"/><circle cx="870" cy="60" r="13" fill="#f2c14e"/><circle cx="1050" cy="54" r="11" fill="#c62828"/>
+<g fill="#fff" opacity=".6"><circle cx="146" cy="55" r="3"/><circle cx="506" cy="55" r="3"/><circle cx="866" cy="55" r="3"/></g>
+<!-- gold sparkles -->
+<g fill="#f2c14e">
+<path d="M70 110 L73 117 L80 120 L73 123 L70 130 L67 123 L60 120 L67 117 Z"/>
+<path d="M1090 102 L1092 108 L1098 110 L1092 112 L1090 118 L1088 112 L1082 110 L1088 108 Z"/>
+<path d="M60 371 L62.7 377.3 L69 380 L62.7 382.7 L60 389 L57.3 382.7 L51 380 L57.3 377.3 Z"/>
+<path d="M1100 322 L1102 328 L1108 330 L1102 332 L1100 338 L1098 332 L1092 330 L1098 328 Z"/>
+<path d="M466 81 L468.7 87.3 L475 90 L468.7 92.7 L466 99 L463.3 92.7 L457 90 L463.3 87.3 Z"/>
+</g>
+<!-- extra snowflakes -->
+<g fill="#fff" opacity=".7"><circle cx="40" cy="200" r="3"/><circle cx="110" cy="260" r="2.5"/><circle cx="280" cy="120" r="3"/><circle cx="360" cy="300" r="2"/><circle cx="200" cy="470" r="2.5"/><circle cx="40" cy="470" r="2"/><circle cx="1000" cy="250" r="2.5"/><circle cx="1120" cy="470" r="2"/><circle cx="300" cy="200" r="2"/></g>
+<!-- background pine trees and holly leaves -->
+<defs><g id="pine"><path d="M0 -120L18 -84L10 -84L28 -50L18 -50L36 -14L4 -14L4 0L-4 0L-4 -14L-36 -14L-18 -50L-28 -50L-10 -84L-18 -84Z"/></g><path id="holly" d="M12 2L15 7L21 6L18 11L23 14L17 15L16 21L12 18L8 21L7 15L1 14L6 11L3 6L9 7Z"/></defs>
+<g fill="#0c3322">
+<use href="#pine" transform="translate(120 744) scale(0.75)"/>
+<use href="#pine" transform="translate(250 744) scale(0.7)"/>
+<use href="#pine" transform="translate(900 744) scale(0.8)"/>
+<use href="#pine" transform="translate(1050 744) scale(0.7)"/>
+</g>
+<g fill="#11452f">
+<use href="#pine" transform="translate(30 744) scale(1.1)"/>
+<use href="#pine" transform="translate(200 744) scale(1.3)"/>
+<use href="#pine" transform="translate(990 744) scale(1.4)"/>
+<use href="#pine" transform="translate(1120 744) scale(1.0)"/>
+</g>
+<g fill="#1f6b46" opacity=".75">
+<use href="#holly" transform="translate(95 330) rotate(-25) scale(1.4) translate(-12 -12)"/>
+<use href="#holly" transform="translate(250 420) rotate(30) scale(1.0) translate(-12 -12)"/>
+<use href="#holly" transform="translate(330 250) rotate(-10) scale(1.2) translate(-12 -12)"/>
+<use href="#holly" transform="translate(820 300) rotate(40) scale(1.3) translate(-12 -12)"/>
+<use href="#holly" transform="translate(900 420) rotate(-35) scale(1.0) translate(-12 -12)"/>
+<use href="#holly" transform="translate(1040 260) rotate(15) scale(1.5) translate(-12 -12)"/>
+<use href="#holly" transform="translate(1110 470) rotate(-20) scale(1.1) translate(-12 -12)"/>
+<use href="#holly" transform="translate(60 560) rotate(60) scale(1.0) translate(-12 -12)"/>
+</g>
+<!-- reindeer pulling a truck-style trailer with an extension drawbar -->
+<g transform="translate(745 744) scale(0.8)" opacity=".95">
+<rect x="4" y="-24" width="196" height="6" fill="#06150e"/>
+<circle cx="24" cy="-8" r="8" fill="#06150e"/><circle cx="40" cy="-8" r="8" fill="#06150e"/><circle cx="100" cy="-8" r="8" fill="#06150e"/><circle cx="116" cy="-8" r="8" fill="#06150e"/>
+<circle cx="24" cy="-8" r="2.5" fill="#c9a54a"/><circle cx="40" cy="-8" r="2.5" fill="#c9a54a"/><circle cx="100" cy="-8" r="2.5" fill="#c9a54a"/><circle cx="116" cy="-8" r="2.5" fill="#c9a54a"/>
+<rect x="0" y="-36" width="150" height="12" fill="#b71c1c"/>
+<rect x="150" y="-34" width="50" height="10" fill="#8e1414"/>
+<rect x="148" y="-38" width="4" height="14" fill="#f2c14e"/>
+<rect x="0" y="-44" width="150" height="8" fill="#f2c14e"/>
+<rect x="150" y="-42" width="50" height="8" fill="#f2c14e"/>
+<rect x="200" y="-30" width="50" height="4" fill="#06150e"/>
+<rect x="246" y="-42" width="6" height="12" fill="#f2c14e"/>
+<rect x="10" y="-70" width="30" height="26" fill="#f2c14e"/><rect x="23" y="-70" width="4" height="26" fill="#b71c1c"/>
+<rect x="46" y="-60" width="26" height="16" fill="#b71c1c"/><rect x="57" y="-60" width="4" height="16" fill="#f2c14e"/>
+<rect x="80" y="-86" width="34" height="42" fill="#f6e7b4"/><rect x="95" y="-86" width="4" height="42" fill="#b71c1c"/><circle cx="97" cy="-88" r="4" fill="#b71c1c"/>
+<rect x="122" y="-66" width="22" height="22" fill="#f2c14e"/><rect x="131" y="-66" width="4" height="22" fill="#b71c1c"/>
+<rect x="160" y="-56" width="26" height="14" fill="#b71c1c"/>
+<g fill="#8a5a2b">
+<rect x="250" y="-62" width="50" height="22" rx="11"/>
+<path d="M284 -66 L298 -92 L308 -90 L296 -60 Z"/>
+<ellipse cx="304" cy="-94" rx="9" ry="6.5" transform="rotate(-20 304 -94)"/>
+<path d="M298 -98 L291 -106 L300 -101 Z"/>
+<rect x="254" y="-42" width="6" height="42"/><rect x="264" y="-42" width="6" height="42"/><rect x="284" y="-42" width="6" height="42"/><rect x="292" y="-42" width="6" height="42"/>
+<circle cx="248" cy="-56" r="4" fill="#f6e7b4"/>
+</g>
+<path d="M302 -100 Q298 -116 290 -124 M296 -110 L288 -112 M294 -118 L302 -126 M300 -104 L310 -112" fill="none" stroke="#f2c14e" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="312" cy="-93" r="2.6" fill="#c62828"/>
+</g>
+<!-- candy cane on the left -->
+<path d="M26 600 L26 486 Q26 466 44 466 Q58 466 58 480" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+<path d="M26 600 L26 486 Q26 466 44 466 Q58 466 58 480" fill="none" stroke="#c62828" stroke-width="9" stroke-dasharray="8 8"/>
+<!-- small gift box on the ground -->
+<rect x="14" y="716" width="32" height="26" fill="#c62828"/><rect x="28" y="716" width="5" height="26" fill="#f2c14e"/><rect x="14" y="726" width="32" height="5" fill="#f2c14e"/>
+<path d="M30 716 Q22 700 28 698 Q34 698 30 716 Z" fill="#f2c14e"/><path d="M30 716 Q38 700 32 698 Q26 698 30 716 Z" fill="#f2c14e"/>
 <g fill="#173f2c">
 <rect x="60" y="702" width="110" height="30" rx="4"/><rect x="90" y="668" width="40" height="36" rx="3"/><path d="M120 694 L168 626 L180 636 L134 704 Z"/><path d="M166 630 L200 668 L192 676 L158 640 Z"/><path d="M194 666 L214 666 L220 692 L198 696 Z"/><circle cx="76" cy="740" r="11"/><circle cx="150" cy="740" r="11"/>
 <rect x="250" y="698" width="180" height="12"/><rect x="250" y="688" width="50" height="40" rx="4"/><path d="M300 700 L410 700 L420 666 L302 666 Z"/><circle cx="270" cy="740" r="11"/><circle cx="330" cy="740" r="11"/><circle cx="380" cy="740" r="11"/><circle cx="406" cy="740" r="11"/>
@@ -142,6 +252,16 @@ function setEditing(on){
   modeLabel.textContent = on ? 'Edit mode' : 'View mode';
 }
 editBtn.addEventListener('click', () => setEditing(!editing));
+
+// Switch between the Christian border and the reindeer border (remembered in this browser)
+const borderBtn = document.getElementById('borderBtn');
+function setBorder(reindeer){
+  document.body.classList.toggle('border-reindeer', reindeer);
+  borderBtn.textContent = reindeer ? 'Border: Reindeer' : 'Border: Christian';
+  try { localStorage.setItem('xmas2026-border', reindeer ? 'reindeer' : 'christian'); } catch (e) {}
+}
+try { setBorder(localStorage.getItem('xmas2026-border') === 'reindeer'); } catch (e) { setBorder(false); }
+borderBtn.addEventListener('click', () => setBorder(!document.body.classList.contains('border-reindeer')));
 
 editables.forEach(el => {
   el.addEventListener('input', () => {
