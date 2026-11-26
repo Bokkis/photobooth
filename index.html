@@ -15,22 +15,22 @@ button{font:inherit;cursor:pointer;border:0;border-radius:999px;padding:9px 16px
 button.ghost{background:transparent;color:var(--cream);border:1px solid var(--gold2)}
 
 /* Half-sheet layout: text on the left, photo grid on the right (1152 x 768 design) */
-.hero{position:relative;display:flex;justify-content:center;align-items:center;gap:40px;min-height:calc(100vh - 60px);overflow:hidden}
+.hero{position:relative;display:flex;justify-content:center;align-items:center;gap:20px;min-height:calc(100vh - 60px);overflow:hidden}
 .bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.info{position:relative;z-index:1;width:440px;padding:40px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
+.info{position:relative;z-index:1;width:480px;padding:40px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
 .cinz{font-family:Cinzel,serif}
 h1{margin:0;font-family:'Mountains of Christmas',cursive;color:var(--gold);text-shadow:0 3px 0 #7a1212;font-weight:700}
-.dept{margin:6px 0 0;font-family:Cinzel,serif;font-size:20px;font-weight:600;letter-spacing:.12em;color:var(--cream);min-height:28px;outline:none}
-.plaque{margin-top:12px;padding:8px 28px;border:2px solid var(--gold2);border-radius:8px;background:var(--bg)}
-.plaque span{font-family:Cinzel,serif;font-size:26px;font-weight:700;letter-spacing:.25em;color:var(--gold2);text-shadow:0 1px 0 rgba(255,255,255,.35),0 -1px 0 rgba(0,0,0,.8);outline:none}
+.dept{margin:6px 0 0;font-family:Cinzel,serif;font-size:24px;font-weight:600;letter-spacing:.12em;color:var(--cream);min-height:34px;outline:none}
+.plaque{margin-top:12px;padding:10px 32px;border:2px solid var(--gold2);border-radius:8px;background:var(--bg)}
+.plaque span{font-family:Cinzel,serif;font-size:32px;font-weight:700;letter-spacing:.25em;color:var(--gold2);text-shadow:0 1px 0 rgba(255,255,255,.35),0 -1px 0 rgba(0,0,0,.8);outline:none}
 .editable{outline:none}
 body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-radius:4px;cursor:text;background:rgba(242,193,78,.08)}
-.hint{font-size:11px;color:var(--muted);letter-spacing:.08em;margin:0}
+.hint{font-size:13px;color:var(--muted);letter-spacing:.08em;margin:0}
 
 .photos{position:relative;z-index:1;width:640px;display:flex;flex-direction:column;gap:16px;padding:40px 0 16px}
 .row{display:grid;grid-template-columns:310px 310px;gap:20px;justify-content:center}
 /* Every card has the same size; the photo fills the card */
-.frame{position:relative;display:block;overflow:hidden;border:5px solid var(--cream);border-radius:18px;background:var(--frame);cursor:pointer;color:var(--muted);font-size:15px;text-align:center}
+.frame{position:relative;display:block;overflow:hidden;border:5px solid var(--cream);border-radius:18px;background:var(--frame);cursor:pointer;color:var(--muted);font-size:20px;text-align:center}
 .frame.top{width:310px;height:320px}
 .frame.big{width:640px;height:360px}
 .frame input{display:none}
@@ -206,14 +206,14 @@ body.border-reindeer .frame::after{background:
 </svg>
 
 <div class="info">
-<p class="cinz" style="margin:0;font-size:26px;font-weight:700;color:var(--gold)">MERRY CHRISTMAS</p>
-<p style="margin:0;font-size:13px;letter-spacing:.2em">&amp; HAPPY NEW YEAR</p>
-<p class="cinz" style="margin:22px 0 0;font-size:20px;font-weight:600;letter-spacing:.12em">Yuval Trucking</p>
+<p class="cinz" style="margin:0;font-size:32px;font-weight:700;color:var(--gold)">MERRY CHRISTMAS</p>
+<p style="margin:0;font-size:16px;letter-spacing:.2em">&amp; HAPPY NEW YEAR</p>
+<p class="cinz" style="margin:22px 0 0;font-size:24px;font-weight:600;letter-spacing:.12em">Yuval Trucking</p>
 <p class="dept editable" id="dept" contenteditable="false" data-key="dept" data-default="Department name">Department name</p>
-<h1 style="font-size:70px;line-height:.95">Christmas</h1>
-<h1 style="font-size:56px;line-height:1">Party</h1>
-<p class="cinz" style="margin:8px 0 0;font-size:26px;font-weight:700;letter-spacing:.1em">2026</p>
-<p class="editable" id="partyDate" contenteditable="false" data-key="partyDate" data-default="December 13, 2026" style="margin:0;font-size:18px">December 13, 2026</p>
+<h1 style="font-size:86px;line-height:.95">Christmas</h1>
+<h1 style="font-size:72px;line-height:1">Party</h1>
+<p class="cinz" style="margin:8px 0 0;font-size:32px;font-weight:700;letter-spacing:.1em">2026</p>
+<p class="editable" id="partyDate" contenteditable="false" data-key="partyDate" data-default="December 13, 2026" style="margin:0;font-size:22px">December 13, 2026</p>
 <div class="plaque"><span class="editable" id="plaque" contenteditable="false" data-key="plaque" data-default="ALMAS">ALMAS</span></div>
 <p class="hint">PUROK 6, BARANGAY TALIPAPA, CABANATUAN CITY</p>
 </div>
