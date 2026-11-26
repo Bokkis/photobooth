@@ -153,14 +153,31 @@ editables.forEach(el => {
 
 // The card takes the exact proportion of the photo, so the whole photo shows with no cut and no blur.
 // The card stays within its slot (360 x 240 for the small cards, 740 x 400 for the big one).
-function fitCard(frame, ratio){
-  const big = frame.classList.contains('big');
-  const slotW = big ? 740 : 360, slotH = big ? 400 : 240;
-  const availW = slotW - 10, availH = slotH - 10; // the 5px border on each side
-  let w = availW, h = w / ratio;
-  if (h > availH){ h = availH; w = h * ratio; }
-  frame.style.width = (w + 10) + 'px';
+function setSize(frame, w, h){
+  frame.style.width = (w + 10) + 'px';   // +10 for the 5px border on each side
   frame.style.height = (h + 10) + 'px';
+}
+// The two top cards share one height and sit side by side, spanning the same 740px as the big card below.
+// Each keeps its own photo shape, so nothing is cut.
+function layoutTop(){
+  const tops = [...document.querySelectorAll('.frame.top')];
+  const ratios = tops.map(f => f._ratio || null);
+  if (ratios.every(r => r)){
+    const H = Math.min(700 / (ratios[0] + ratios[1]), 260);
+    tops.forEach((f, i) => setSize(f, H * ratios[i], H));
+  } else {
+    tops.forEach((f, i) => { if (ratios[i]) setSize(f, 230 * ratios[i], 230); });
+  }
+}
+function fitBig(frame, ratio){
+  let w = 730, h = w / ratio;
+  if (h > 390){ h = 390; w = h * ratio; }
+  setSize(frame, w, h);
+}
+function fitCard(frame, ratio){
+  frame._ratio = ratio;
+  if (frame.classList.contains('big')) fitBig(frame, ratio);
+  else layoutTop();
 }
 
 document.querySelectorAll('.frame').forEach(frame => {
