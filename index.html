@@ -87,11 +87,15 @@ body.border-reindeer .frame::after{background:
   .frame.big{width:100%;height:auto;aspect-ratio:37/20}
 }
 
-/* Print / Save as PDF: one half sheet of short bond paper (8.5 x 5.5 in, landscape) */
-@page{size:8.5in 5.5in landscape;margin:0}
+/* Print / Save as PDF: two half sheets (8.5 x 5.5 in each, landscape) stacked on one short bond sheet (8.5 x 11 in) */
+@page{size:8.5in 11in portrait;margin:0}
+.print-copies{display:none}
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  html,body{width:8.5in;height:5.5in;margin:0;overflow:hidden;background:#fff!important}
+  html,body{width:8.5in;height:11in;margin:0;overflow:hidden;background:#fff!important}
+  .hero:not(.print-copy){display:none!important}
+  .print-copies{display:block!important;position:relative;width:8.5in;height:11in;overflow:hidden;background:#fff}
+  .print-copies::after{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px dashed #888;z-index:9}
   /* The green background belongs to the design area only, so the rest of the paper stays white */
   .hero{zoom:.6875;width:1152px!important;height:768px!important;min-height:0!important;margin:0 auto;overflow:hidden;background:radial-gradient(circle at 15% 25%,#1f5a3a 0,transparent 38%),radial-gradient(circle at 85% 40%,#184a31 0,transparent 42%),var(--bg)!important}
   .noprint{display:none!important}
@@ -106,8 +110,8 @@ body.border-reindeer .frame::after{background:
 <span style="font-size:13px;color:var(--muted)" id="modeLabel">View mode</span>
 <button class="ghost" id="editBtn">Edit details</button>
 <button class="ghost" id="borderBtn">Border: Christian</button>
-<button class="ghost" onclick="window.print()">Print</button>
-<button onclick="window.print()">Download PDF</button>
+<button class="ghost" onclick="printCopies()">Print</button>
+<button onclick="printCopies()">Download PDF</button>
 </div>
 </nav>
 
@@ -288,6 +292,30 @@ document.querySelectorAll('.frame').forEach(frame => {
     input.value = '';
   });
 });
+// Print: two copies of the design, one above the other, on one short bond sheet (8.5 x 11 in)
+function prepareCopies(){
+  const old = document.getElementById('printCopies');
+  if (old) old.remove();
+  const hero = document.querySelector('.hero');
+  const wrap = document.createElement('div');
+  wrap.id = 'printCopies';
+  wrap.className = 'print-copies';
+  for (let i = 1; i <= 2; i++){
+    const copy = hero.cloneNode(true);
+    copy.classList.add('print-copy');
+    copy.removeAttribute('id');
+    copy.querySelectorAll('[id]').forEach(el => { el.id = el.id + '-c' + i; });
+    copy.querySelectorAll('use').forEach(u => {
+      const id = (u.getAttribute('href') || '').slice(1);
+      if (id) u.setAttribute('href', '#' + id + '-c' + i);
+    });
+    wrap.appendChild(copy);
+  }
+  document.body.appendChild(wrap);
+}
+function printCopies(){ prepareCopies(); window.print(); }
+window.addEventListener('beforeprint', () => { if (!document.getElementById('printCopies')) prepareCopies(); });
+window.addEventListener('afterprint', () => { const w = document.getElementById('printCopies'); if (w) w.remove(); });
 </script>
 </body>
 </html>
