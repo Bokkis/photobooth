@@ -31,9 +31,7 @@ body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-
 .frame.top{width:360px;height:240px}
 .frame.big{width:740px;height:400px}
 .frame input{display:none}
-.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-/* Blurred copy of the same photo fills the empty side/top areas; the sharp photo stays whole (not cropped) */
-.frame img.bgfill{object-fit:cover;filter:blur(16px);transform:scale(1.15);opacity:.85;z-index:0}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .frame img.main{z-index:1}
 .frame .cap{z-index:2}
 .frame .cap{position:absolute;left:0;right:0;bottom:0;padding:4px 8px;background:rgba(0,0,0,.5);font-size:12px;color:var(--cream);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -154,23 +152,17 @@ editables.forEach(el => {
   });
 });
 
-// Photo frames: the frame size stays fixed; the whole photo fits inside it without cropping
+// Photo frames: the frame size stays fixed; the photo fills the whole card
 document.querySelectorAll('.frame').forEach(frame => {
   const input = frame.querySelector('input');
   input.addEventListener('change', e => {
     const file = e.target.files[0];
     if (!file) return;
     frame.querySelectorAll('img,.cap').forEach(n => n.remove());
-    const url = URL.createObjectURL(file);
-    const bg = document.createElement('img');
-    bg.className = 'bgfill';
-    bg.alt = '';
-    bg.src = url;
-    frame.insertBefore(bg, input);
     const img = document.createElement('img');
     img.className = 'main';
     img.alt = file.name;
-    img.src = url;
+    img.src = URL.createObjectURL(file);
     frame.insertBefore(img, input);
     const cap = document.createElement('div');
     cap.className = 'cap';
