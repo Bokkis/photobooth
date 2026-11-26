@@ -32,10 +32,12 @@ body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-
 .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
 .frame input{display:none}
 .frame .cap{position:absolute;left:0;right:0;bottom:0;padding:18px 10px 6px;background:linear-gradient(transparent,rgba(0,0,0,.7));font-size:12px;color:#fff;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.frame.big{grid-column:1/-1;aspect-ratio:16/9}
 .frame.filled{font-size:0}
 .footer{position:relative;z-index:1;text-align:center;font-size:12px;color:var(--muted);padding:14px;letter-spacing:.08em}
 @media(max-width:860px){.info{width:100%;padding:30px 24px}.photos{padding:10px 24px 40px}}
 @media(max-width:560px){.pgrid{grid-template-columns:repeat(2,1fr);gap:12px}}
+@media print{@page{margin:0}html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}nav{display:none!important}.hero{min-height:0}.photos{padding-bottom:40px}.frame{break-inside:avoid}.frame.filled{cursor:default}}
 </style>
 </head>
 <body>
@@ -44,9 +46,12 @@ body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-
 <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
 <span style="font-size:13px;color:var(--muted)" id="modeLabel">View mode</span>
 <button class="ghost" id="editBtn">Edit details</button>
+<button class="ghost" id="printBtn">Print</button>
+<button id="pdfBtn">Download PDF</button>
 </div>
 </nav>
 
+<div id="sheet">
 <section class="hero">
 <svg class="bg" viewBox="0 0 1152 768" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
 <g fill="#fff" opacity=".55">
@@ -87,11 +92,15 @@ body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-
 <label class="frame" data-slot="0">Click to add photo<input type="file" accept="image/*"></label>
 <label class="frame" data-slot="1">Click to add photo<input type="file" accept="image/*"></label>
 <label class="frame" data-slot="2">Click to add photo<input type="file" accept="image/*"></label>
+<label class="frame big" data-slot="3">Click to add photo (landscape)<input type="file" accept="image/*"></label>
 </div>
 </div>
 </section>
 
 <footer class="footer">Yuval Trucking Services &middot; Christmas Party 2026</footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
 const editBtn = document.getElementById('editBtn');
@@ -136,7 +145,7 @@ document.querySelectorAll('.frame').forEach(frame => {
     const img = document.createElement('img');
     img.alt = file.name;
     img.src = URL.createObjectURL(file);
-    img.onload = () => { frame.style.aspectRatio = img.naturalWidth + ' / ' + img.naturalHeight; };
+    img.onload = () => { if (!frame.classList.contains('big') || img.naturalWidth >= img.naturalHeight) frame.style.aspectRatio = img.naturalWidth + ' / ' + img.naturalHeight; };
     frame.classList.add('filled');
     frame.insertBefore(img, input);
     const cap = document.createElement('div');
@@ -144,6 +153,23 @@ document.querySelectorAll('.frame').forEach(frame => {
     cap.textContent = file.name.replace(/\.[^.]+$/, '');
     frame.appendChild(cap);
   });
+});
+
+document.getElementById('printBtn').addEventListener('click', () => { if (editing) setEditing(false); window.print(); });
+document.getElementById('pdfBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('pdfBtn');
+  if (editing) setEditing(false);
+  if (!window.html2canvas || !window.jspdf) { alert('To save as PDF: in the print window that opens, choose Destination = Save as PDF.'); window.print(); return; }
+  btn.disabled = true; btn.textContent = 'Making PDF...';
+  try {
+    const el = document.getElementById('sheet');
+    const c = await html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#0b2418' });
+    const w = c.width, hgt = c.height;
+    const pdf = new window.jspdf.jsPDF({ orientation: w > hgt ? 'l' : 'p', unit: 'px', format: [w, hgt], hotfixes: ['px_scaling'] });
+    pdf.addImage(c.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, w, hgt);
+    pdf.save('Yuval-Trucking-Christmas-Party-2026.pdf');
+  } catch (e) { alert('To save as PDF: in the print window that opens, choose Destination = Save as PDF.'); window.print(); }
+  btn.disabled = false; btn.textContent = 'Download PDF';
 });
 </script>
 </body>
