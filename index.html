@@ -6,56 +6,58 @@
 <title>Yuval Trucking Christmas Party 2026</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Mountains+of+Christmas:wght@700&family=Poppins:wght@400;600&display=swap">
 <style>
-:root{--gold:#f2c14e;--gold2:#c9a54a;--cream:#f6e7b4;--muted:#c9d8c2;--red:#c62828;--bg:#0b2418;--frame:#123524}
+:root{--gold:#f2c14e;--gold2:#c9a54a;--cream:#f6e7b4;--muted:#c9d8c2;--bg:#0b2418;--frame:#123524}
 *{box-sizing:border-box}
 body{margin:0;font-family:Poppins,Arial,sans-serif;color:var(--cream);min-height:100vh;background:radial-gradient(circle at 15% 25%,#1f5a3a 0,transparent 38%),radial-gradient(circle at 85% 40%,#184a31 0,transparent 42%),var(--bg)}
 nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 24px;background:rgba(0,0,0,.3);position:sticky;top:0;z-index:5;border-bottom:1px solid var(--gold2)}
 nav .brand{font-family:Cinzel,serif;color:var(--gold);letter-spacing:.1em;font-weight:700}
 button{font:inherit;cursor:pointer;border:0;border-radius:999px;padding:9px 16px;background:var(--gold);color:#1b1b1b;font-weight:600}
 button.ghost{background:transparent;color:var(--cream);border:1px solid var(--gold2)}
-.hero{position:relative;display:flex;flex-wrap:wrap;justify-content:center;min-height:calc(100vh - 60px);overflow:hidden}
+
+/* Half-sheet layout: text on the left, photo grid on the right (1152 x 768 design) */
+.hero{position:relative;display:flex;justify-content:center;align-items:center;gap:40px;min-height:calc(100vh - 60px);overflow:hidden}
 .bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.info{position:relative;z-index:1;width:310px;max-width:100%;padding:40px 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
+.info{position:relative;z-index:1;width:460px;padding:40px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
 .cinz{font-family:Cinzel,serif}
 h1{margin:0;font-family:'Mountains of Christmas',cursive;color:var(--gold);text-shadow:0 3px 0 #7a1212;font-weight:700}
-.dept{margin:6px 0 0;font-family:Cinzel,serif;font-size:22px;font-weight:600;letter-spacing:.12em;color:var(--cream);min-height:30px;outline:none}
+.dept{margin:6px 0 0;font-family:Cinzel,serif;font-size:20px;font-weight:600;letter-spacing:.12em;color:var(--cream);min-height:28px;outline:none}
 .plaque{margin-top:12px;padding:8px 28px;border:2px solid var(--gold2);border-radius:8px;background:var(--bg)}
 .plaque span{font-family:Cinzel,serif;font-size:26px;font-weight:700;letter-spacing:.25em;color:var(--gold2);text-shadow:0 1px 0 rgba(255,255,255,.35),0 -1px 0 rgba(0,0,0,.8);outline:none}
 .editable{outline:none}
 body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-radius:4px;cursor:text;background:rgba(242,193,78,.08)}
 .hint{font-size:11px;color:var(--muted);letter-spacing:.08em;margin:0}
-.photos{position:relative;z-index:1;padding:39px 10px 39px 0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:20px}
-.row{display:flex;gap:20px;justify-content:center}
-/* Empty slots keep a fixed size. A filled card takes the exact shape of its photo, so nothing is cut. */
-.frame{position:relative;flex:none;box-sizing:border-box;border:5px solid var(--cream);border-radius:18px;background:var(--frame);overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:15px;text-align:center;padding:0}
-.frame.top{width:360px;height:240px}
-.frame.big{width:740px;height:400px}
+
+.photos{position:relative;z-index:1;width:520px;display:flex;flex-direction:column;gap:20px;padding:20px 0}
+.row{display:grid;grid-template-columns:250px 250px;gap:20px;justify-content:center}
+/* Every card has the same size; the photo fills the card */
+.frame{position:relative;display:block;overflow:hidden;border:5px solid var(--cream);border-radius:18px;background:var(--frame);cursor:pointer;color:var(--muted);font-size:15px;text-align:center}
+.frame.top{width:250px;height:326px}
+.frame.big{width:520px;height:382px}
 .frame input{display:none}
-.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;user-select:none;-webkit-user-drag:none}
-.frame .ph{position:relative;z-index:0}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
+.frame .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
 .frame.filled .ph{display:none}
+
 .footer{position:relative;z-index:1;text-align:center;font-size:12px;color:var(--muted);padding:14px;letter-spacing:.08em}
-@media(max-width:860px){
+
+/* Phones and small screens: stack everything */
+@media screen and (max-width:860px){
+  .hero{flex-direction:column;gap:0}
   .info{width:100%;padding:30px 24px}
-  .photos{padding:10px 16px 40px;width:100%}
-  .row{width:100%;flex-wrap:wrap}
-  .frame.top:not(.filled){width:calc(50% - 10px);height:auto;aspect-ratio:3/2}
-  .frame.big:not(.filled){width:100%;height:auto;aspect-ratio:37/20}
+  .photos{width:100%;padding:10px 16px 40px}
+  .row{grid-template-columns:1fr 1fr;width:100%}
+  .frame.top{width:100%;height:auto;aspect-ratio:3/4}
+  .frame.big{width:100%;height:auto;aspect-ratio:37/20}
 }
+
 /* Print / Save as PDF: one half sheet of short bond paper (8.5 x 5.5 in, landscape) */
 @page{size:8.5in 5.5in landscape;margin:0}
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   html,body{width:8.5in;height:5.5in;margin:0;overflow:hidden;background:#fff!important}
-  /* The green design background belongs to the design area only, so the rest of the paper stays white */
-  .hero{background:radial-gradient(circle at 15% 25%,#1f5a3a 0,transparent 38%),radial-gradient(circle at 85% 40%,#184a31 0,transparent 42%),var(--bg)!important}
+  /* The green background belongs to the design area only, so the rest of the paper stays white */
+  .hero{zoom:.6875;width:1152px!important;height:768px!important;min-height:0!important;margin:0 auto;overflow:hidden;background:radial-gradient(circle at 15% 25%,#1f5a3a 0,transparent 38%),radial-gradient(circle at 85% 40%,#184a31 0,transparent 42%),var(--bg)!important}
   .noprint{display:none!important}
-  .hero{zoom:.6875;width:1152px!important;height:768px!important;min-height:0!important;flex-wrap:nowrap!important;overflow:hidden;margin:0 auto}
-  /* The phone-size breakpoint must not apply on paper (the printed page is narrower than 860px) */
-  .info{width:310px!important;max-width:none!important;padding:40px 16px!important}
-  .photos{width:auto!important;flex:none!important;padding:39px 10px 39px 0!important;justify-content:center!important;align-items:center!important}
-  .row{width:auto!important;flex-wrap:nowrap!important}
-  /* card sizes come from the script, so the printout matches the screen */
   .editable{outline:none!important;background:none!important}
 }
 </style>
@@ -98,9 +100,9 @@ body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-
 <p style="margin:0;font-size:13px;letter-spacing:.2em">&amp; HAPPY NEW YEAR</p>
 <p class="cinz" style="margin:22px 0 0;font-size:20px;font-weight:600;letter-spacing:.12em">Yuval Trucking</p>
 <p class="dept editable" id="dept" contenteditable="false" data-key="dept" data-default="Department name">Department name</p>
-<h1 style="font-size:60px;line-height:.95">Christmas</h1>
-<h1 style="font-size:50px;line-height:1">Party</h1>
-<p class="cinz" style="margin:8px 0 0;font-size:30px;font-weight:700;letter-spacing:.1em">2026</p>
+<h1 style="font-size:70px;line-height:.95">Christmas</h1>
+<h1 style="font-size:56px;line-height:1">Party</h1>
+<p class="cinz" style="margin:8px 0 0;font-size:26px;font-weight:700;letter-spacing:.1em">2026</p>
 <p class="editable" id="partyDate" contenteditable="false" data-key="partyDate" data-default="December 13, 2026" style="margin:0;font-size:18px">December 13, 2026</p>
 <div class="plaque"><span class="editable" id="plaque" contenteditable="false" data-key="plaque" data-default="ALMAS">ALMAS</span></div>
 <p class="hint">PUROK 6, BARANGAY TALIPAPA, CABANATUAN CITY</p>
@@ -108,10 +110,10 @@ body.editing .editable{outline:2px dashed var(--gold);outline-offset:4px;border-
 
 <div class="photos">
 <div class="row">
-<label class="frame top" data-slot="0"><span class="ph">Click to add photo</span><input type="file" accept="image/*"></label>
-<label class="frame top" data-slot="1"><span class="ph">Click to add photo</span><input type="file" accept="image/*"></label>
+<label class="frame top"><span class="ph">Click to add photo</span><input type="file" accept="image/*"></label>
+<label class="frame top"><span class="ph">Click to add photo</span><input type="file" accept="image/*"></label>
 </div>
-<label class="frame big" data-slot="2"><span class="ph">Click to add photo</span><input type="file" accept="image/*"></label>
+<label class="frame big"><span class="ph">Click to add photo</span><input type="file" accept="image/*"></label>
 </div>
 </section>
 
@@ -150,43 +152,7 @@ editables.forEach(el => {
   });
 });
 
-// The card takes the exact proportion of the photo, so the whole photo shows with no cut and no blur.
-// The card stays within its slot (360 x 240 for the small cards, 740 x 400 for the big one).
-const DEF_TOP = 1.5, DEF_BIG = 1.85; // placeholder shapes before a photo is added
-const MAX_GALLERY_H = 690;           // keeps the whole gallery on the half sheet, with even space above and below
-
-function setCardSize(frame, w, h){
-  frame.style.width = (w + 10) + 'px';   // +10 for the 5px border on each side
-  frame.style.height = (h + 10) + 'px';
-}
-
-// Lays out the whole gallery as one even block:
-// - the two top cards share one height and together span exactly the width of the big card
-// - each card keeps its photo's shape, so nothing is cut
-// - the whole block scales down if needed to fit the page
-function layoutGallery(){
-  const tops = [...document.querySelectorAll('.frame.top')];
-  const big = document.querySelector('.frame.big');
-  const rt = tops.map(f => f._ratio || DEF_TOP);
-  const rb = big._ratio || DEF_BIG;
-  const sumT = rt[0] + rt[1];
-  const Ht = 700 / sumT;               // top row photo height at scale 1
-  const k = Ht + 700 / rb;
-  const c = 40 + 30 / rb;              // borders and gap, which do not scale
-  const maxW = Math.min(842, window.innerWidth - 40);   // widest the gallery can be on this screen
-  const s = Math.min(1.2, (MAX_GALLERY_H - c) / k, (maxW - 50) / 700);
-  tops.forEach((f, i) => setCardSize(f, s * 700 * rt[i] / sumT, s * Ht));
-  const wb = 700 * s + 30;
-  setCardSize(big, wb, wb / rb);
-}
-
-function fitCard(frame, ratio){
-  frame._ratio = ratio;
-  layoutGallery();
-}
-layoutGallery();
-window.addEventListener('resize', layoutGallery);
-
+// Photo cards: click a card to choose a photo; the photo fills the card
 document.querySelectorAll('.frame').forEach(frame => {
   const input = frame.querySelector('input');
   input.addEventListener('change', e => {
@@ -196,7 +162,6 @@ document.querySelectorAll('.frame').forEach(frame => {
     const img = document.createElement('img');
     img.alt = file.name;
     img.draggable = false;
-    img.onload = () => fitCard(frame, img.naturalWidth / img.naturalHeight);
     img.src = URL.createObjectURL(file);
     frame.insertBefore(img, input);
     frame.classList.add('filled');
