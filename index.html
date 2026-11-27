@@ -50,12 +50,12 @@ body.pl .logo{left:26px;top:22px;width:70px;height:70px;padding:4px;border-width
 .tw0{animation:tw 1.6s infinite}.tw1{animation:tw 2.1s .4s infinite}.tw2{animation:tw 1.3s .8s infinite}
 @media print{.tw0,.tw1,.tw2{animation:none}}
 .bgp{display:none!important}
-@page{size:8.5in 5.5in;margin:0}
+@page{size:8.5in 11in;margin:0}
 /* Screen + print layout: half-sheet bond, landscape (8.5in x 5.5in = 816 x 528 px), equal spacing */
 body.pl{min-height:0;background:#06150e}
 @media print{nav{display:none!important}}
 body.pl #sheet{width:816px;height:528px;overflow:hidden;margin:16px auto;box-shadow:0 10px 40px rgba(0,0,0,.55);border-radius:6px}
-body.pl .hero{display:grid;grid-template-columns:1fr auto;grid-template-rows:496px;gap:10px;padding:20px 14px 10px 14px;height:528px;min-height:0;align-items:center;overflow:hidden}
+body.pl .hero{display:grid;grid-template-columns:1fr auto;grid-template-rows:496px;gap:10px;padding:20px 10px 10px 10px;height:528px;min-height:0;align-items:center;overflow:hidden}
 body.pl .info{width:auto;padding:0 0 0 4px;gap:4px;justify-content:center}
 body.pl .info .k{font-size:11px!important}
 body.pl .info .ban{font-size:17px!important;padding:5px 12px!important}
@@ -69,12 +69,13 @@ body.pl .plaque{margin-top:6px;padding:5px 20px}
 body.pl .plaque span{font-size:16px}
 body.pl .hint{font-size:8px}
 body.pl .photos{padding:0;min-width:0;width:auto;flex:none;gap:0;align-self:stretch;justify-content:center}
-body.pl .pgrid{width:560px;max-width:560px;gap:10px}
+body.pl .pgrid{width:572px;max-width:572px;gap:10px}
 body.pl .frame{border-width:6px;border-radius:18px;box-shadow:0 2px 8px rgba(0,0,0,.35)}
 body.pl .footer{display:none}
 body.pl .hero::before{inset:4px;border-radius:12px}
 body.pl .logo{left:16px;top:14px;width:86px;height:86px;padding:5px;border-width:3px}
-@media print{body.pl #sheet{margin:0!important;box-shadow:none;border-radius:0;zoom:1!important}html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact;margin:0;width:8.5in;height:5.5in;overflow:hidden;background:#0b2418}}
+@media print{body.pl #sheet{margin:0!important;box-shadow:none;border-radius:0;zoom:1!important}html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact;margin:0;width:8.5in;height:11in;overflow:hidden;background:#0b2418}#sheet2{margin:0!important;box-shadow:none!important;border-radius:0!important;display:block!important;break-before:avoid}}
+#sheet2{width:816px;height:528px;overflow:hidden;position:relative}
 /*bigtext*/
 body.pl .info{gap:2px;padding:96px 0 70px 4px!important}
 body.pl .info .k{font-size:13px!important}
@@ -89,7 +90,7 @@ body.pl .plaque{margin-top:4px;padding:4px 20px}
 body.pl .plaque span{font-size:19px}
 body.pl .hint{font-size:9px}
 /*reindeer*/
-.frame,body.pl .frame{overflow:visible!important;border:12px solid transparent!important;border-radius:20px!important;
+.frame,body.pl .frame{overflow:visible!important;border:9px solid transparent!important;border-radius:20px!important;
 background:linear-gradient(var(--frame),var(--frame)) padding-box,repeating-linear-gradient(135deg,#d62f2f 0 11px,#fff 11px 22px) border-box!important;
 box-shadow:0 0 0 3px #f2c14e,0 6px 14px rgba(0,0,0,.5)!important}
 .frame img{border-radius:9px;outline:2px solid #f2c14e;outline-offset:-1px}
@@ -201,7 +202,7 @@ document.querySelectorAll('.frame').forEach(frame => {
 document.body.classList.add('pl');
 function sizeSheet(){ const z = Math.min(1.5, Math.max(.4, (window.innerWidth - 24) / 816)); document.getElementById('sheet').style.zoom = z; }
 window.addEventListener('resize', sizeSheet);
-window.addEventListener('beforeprint', () => { document.getElementById('sheet').style.zoom = 1; fitPrint(); });
+window.addEventListener('beforeprint', () => { const s=document.getElementById('sheet'); s.style.zoom = 1; fitPrint(); const o=document.getElementById('sheet2'); if(o) o.remove(); const c=s.cloneNode(true); c.id='sheet2'; c.removeAttribute('style'); c.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id')); s.after(c); });
 function fitPrint(){
   const g = document.querySelector('.pgrid');
   g.style.zoom = '';
@@ -210,7 +211,7 @@ function fitPrint(){
   if (hh > avail) g.style.zoom = (avail / hh).toFixed(3);
 }
 
-window.addEventListener('afterprint', () => { sizeSheet(); fitPrint(); });
+window.addEventListener('afterprint', () => { const o=document.getElementById('sheet2'); if(o) o.remove(); sizeSheet(); fitPrint(); });
 sizeSheet(); fitPrint();
 document.getElementById('printBtn').addEventListener('click', () => { if (editing) setEditing(false); window.print(); });
 document.getElementById('pdfBtn').addEventListener('click', async () => {
@@ -224,8 +225,9 @@ document.getElementById('pdfBtn').addEventListener('click', async () => {
     const el = document.getElementById('sheet');
     const c = await html2canvas(el, { scale: 3, useCORS: true, backgroundColor: '#0b2418', width: 816, height: 528, windowWidth: 900 });
     sh.style.zoom = oz; fitPrint();
-    const pdf = new window.jspdf.jsPDF({ orientation: 'l', unit: 'in', format: [8.5, 5.5] });
-    pdf.addImage(c.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, 8.5, 5.5);
+    const pdf = new window.jspdf.jsPDF({ orientation: 'p', unit: 'in', format: [8.5, 11] });
+    const im = c.toDataURL('image/jpeg', 0.95);
+    pdf.addImage(im, 'JPEG', 0, 0, 8.5, 5.5); pdf.addImage(im, 'JPEG', 0, 5.5, 8.5, 5.5);
     pdf.save('Yuval-Trucking-Christmas-Party-2026.pdf');
   } catch (e) { alert('To save as PDF: in the print window that opens, choose Destination = Save as PDF.'); window.print(); }
   btn.disabled = false; btn.textContent = 'Download PDF';
