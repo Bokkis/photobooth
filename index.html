@@ -55,7 +55,7 @@ body.pl .logo{left:26px;top:22px;width:70px;height:70px;padding:4px;border-width
 body.pl{min-height:0;background:#06150e}
 @media print{nav{display:none!important}}
 body.pl #sheet{width:816px;height:528px;overflow:hidden;margin:16px auto;box-shadow:0 10px 40px rgba(0,0,0,.55);border-radius:6px}
-body.pl .hero{display:grid;grid-template-columns:1fr auto;grid-template-rows:504px;gap:10px;padding:12px 14px 12px 14px;height:528px;min-height:0;align-items:center;overflow:hidden}
+body.pl .hero{display:grid;grid-template-columns:1fr auto;grid-template-rows:496px;gap:10px;padding:20px 14px 10px 14px;height:528px;min-height:0;align-items:center;overflow:hidden}
 body.pl .info{width:auto;padding:0 0 0 4px;gap:4px;justify-content:center}
 body.pl .info .k{font-size:11px!important}
 body.pl .info .ban{font-size:17px!important;padding:5px 12px!important}
@@ -89,11 +89,13 @@ body.pl .plaque{margin-top:4px;padding:4px 20px}
 body.pl .plaque span{font-size:19px}
 body.pl .hint{font-size:9px}
 /*reindeer*/
-.frame{overflow:visible!important}
-.frame img{border-radius:inherit}
-.frame .cap{border-radius:0 0 12px 12px}
-.frame::before{content:"";position:absolute;left:50%;top:-20px;width:44%;height:28px;transform:translateX(-50%);background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20120%2034%22%20preserveAspectRatio%3D%22none%22%3E%3Cg%20transform%3D%22translate%280%200%29%22%20fill%3D%22none%22%20stroke%3D%22%23e2a463%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M14%2033%20C12%2022%208%2014%203%208%20M10%2020%20C7%2019%204%2020%201%2022%20M8%2014%20C6%209%203%206%201%205%22/%3E%3Cpath%20d%3D%22M106%2033%20C108%2022%20112%2014%20117%208%20M110%2020%20C113%2019%20116%2020%20119%2022%20M112%2014%20C114%209%20117%206%20119%205%22/%3E%3C/g%3E%3C/svg%3E") center/100% 100% no-repeat;z-index:5;pointer-events:none}
-.frame::after{content:"";position:absolute;left:50%;top:-9px;width:15px;height:15px;transform:translateX(-50%);background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2020%22%3E%3Ccircle%20cx%3D%2210%22%20cy%3D%2210%22%20r%3D%228%22%20fill%3D%22%23d62f2f%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221.5%22/%3E%3Ccircle%20cx%3D%227%22%20cy%3D%227%22%20r%3D%222%22%20fill%3D%22%23fff%22%20opacity%3D%22.7%22/%3E%3C/svg%3E") center/100% 100% no-repeat;z-index:6;pointer-events:none}
+.frame,body.pl .frame{overflow:visible!important;border:12px solid transparent!important;border-radius:20px!important;
+background:linear-gradient(var(--frame),var(--frame)) padding-box,repeating-linear-gradient(135deg,#d62f2f 0 11px,#fff 11px 22px) border-box!important;
+box-shadow:0 0 0 3px #f2c14e,0 6px 14px rgba(0,0,0,.5)!important}
+.frame img{border-radius:9px;outline:2px solid #f2c14e;outline-offset:-1px}
+.frame .cap{border-radius:0 0 9px 9px}
+.frame::before{content:"";position:absolute;left:50%;top:-34px;width:56%;height:34px;transform:translateX(-50%);background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20140%2044%22%20preserveAspectRatio%3D%22none%22%3E%3Cg%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%3E%3Cg%20stroke%3D%22%235a3513%22%20stroke-width%3D%229%22%3E%3Cpath%20d%3D%22M22%2044%20C20%2028%2014%2018%205%209%20M16%2028%20C11%2026%206%2028%202%2031%20M12%2017%20C9%2011%205%208%202%206%22/%3E%3Cpath%20d%3D%22M118%2044%20C120%2028%20126%2018%20135%209%20M124%2028%20C129%2026%20134%2028%20138%2031%20M128%2017%20C131%2011%20135%208%20138%206%22/%3E%3C/g%3E%3Cg%20stroke%3D%22%23e8b070%22%20stroke-width%3D%225.5%22%3E%3Cpath%20d%3D%22M22%2044%20C20%2028%2014%2018%205%209%20M16%2028%20C11%2026%206%2028%202%2031%20M12%2017%20C9%2011%205%208%202%206%22/%3E%3Cpath%20d%3D%22M118%2044%20C120%2028%20126%2018%20135%209%20M124%2028%20C129%2026%20134%2028%20138%2031%20M128%2017%20C131%2011%20135%208%20138%206%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") center/100% 100% no-repeat;z-index:5;pointer-events:none}
+.frame::after{content:"";position:absolute;left:50%;top:-23px;width:26px;height:26px;transform:translateX(-50%);background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2030%2030%22%3E%3Ccircle%20cx%3D%2215%22%20cy%3D%2215%22%20r%3D%2212%22%20fill%3D%22%23e53935%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.5%22/%3E%3Ccircle%20cx%3D%2210.5%22%20cy%3D%2210.5%22%20r%3D%223.2%22%20fill%3D%22%23fff%22%20opacity%3D%22.75%22/%3E%3C/svg%3E") center/100% 100% no-repeat;z-index:6;pointer-events:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
 </style>
 </head>
 <body>
@@ -204,7 +206,7 @@ function fitPrint(){
   const g = document.querySelector('.pgrid');
   g.style.zoom = '';
   if (!document.body.classList.contains('pl')) return;
-  const avail = 528 - 12 - 12 - 2, hh = g.offsetHeight;
+  const avail = 528 - 20 - 10 - 2, hh = g.offsetHeight;
   if (hh > avail) g.style.zoom = (avail / hh).toFixed(3);
 }
 
