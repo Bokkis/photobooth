@@ -98,9 +98,39 @@ box-shadow:0 0 0 2px #f2c14e,0 5px 12px rgba(0,0,0,.5)!important}
 .frame::before{content:"";position:absolute;left:50%;top:-26px;width:50%;height:26px;transform:translateX(-50%);background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20140%2044%22%20preserveAspectRatio%3D%22none%22%3E%3Cg%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%3E%3Cg%20stroke%3D%22%235a3513%22%20stroke-width%3D%229%22%3E%3Cpath%20d%3D%22M22%2044%20C20%2028%2014%2018%205%209%20M16%2028%20C11%2026%206%2028%202%2031%20M12%2017%20C9%2011%205%208%202%206%22/%3E%3Cpath%20d%3D%22M118%2044%20C120%2028%20126%2018%20135%209%20M124%2028%20C129%2026%20134%2028%20138%2031%20M128%2017%20C131%2011%20135%208%20138%206%22/%3E%3C/g%3E%3Cg%20stroke%3D%22%23e8b070%22%20stroke-width%3D%225.5%22%3E%3Cpath%20d%3D%22M22%2044%20C20%2028%2014%2018%205%209%20M16%2028%20C11%2026%206%2028%202%2031%20M12%2017%20C9%2011%205%208%202%206%22/%3E%3Cpath%20d%3D%22M118%2044%20C120%2028%20126%2018%20135%209%20M124%2028%20C129%2026%20134%2028%20138%2031%20M128%2017%20C131%2011%20135%208%20138%206%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") center/100% 100% no-repeat;z-index:5;pointer-events:none}
 .frame::after{content:"";position:absolute;left:50%;top:-17px;width:20px;height:20px;transform:translateX(-50%);background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2030%2030%22%3E%3Ccircle%20cx%3D%2215%22%20cy%3D%2215%22%20r%3D%2212%22%20fill%3D%22%23e53935%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.5%22/%3E%3Ccircle%20cx%3D%2210.5%22%20cy%3D%2210.5%22%20r%3D%223.2%22%20fill%3D%22%23fff%22%20opacity%3D%22.75%22/%3E%3C/svg%3E") center/100% 100% no-repeat;z-index:6;pointer-events:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
 /*fixedgrid*/
-body.pl .pgrid{width:452px!important;max-width:452px!important;height:502px;grid-template-columns:1fr 1fr!important;grid-template-rows:290px 204px!important;gap:8px!important;align-items:stretch!important;zoom:1!important}
+body.pl .pgrid{width:452px!important;max-width:452px!important;height:502px;grid-template-columns:1fr 1fr!important;grid-template-rows:256px 238px!important;gap:8px!important;align-items:stretch!important;zoom:1!important}
 body.pl .pgrid .frame{aspect-ratio:auto!important;width:100%!important;height:100%!important}
 body.pl .pgrid .frame img{object-fit:cover}
+/*adjust*/
+.adj{display:none;position:absolute;left:6px;right:6px;bottom:6px;z-index:8;gap:5px;align-items:center;background:rgba(8,28,18,.88);border:1px solid #f2c14e;border-radius:10px;padding:4px 6px;font:600 10px Poppins,sans-serif;color:#fff}
+.adj input[type=range]{flex:1;min-width:0;accent-color:#f2c14e;height:14px}
+.adj button{font:700 10px Poppins,sans-serif;background:#f2c14e;color:#1a1a1a;border:0;border-radius:6px;padding:3px 6px;cursor:pointer}
+.adj span{min-width:30px;text-align:right}
+body.adjusting .frame.filled .adj{display:flex}
+body.adjusting .frame.filled{cursor:grab;touch-action:none;user-select:none}
+body.adjusting .frame.filled .cap{display:none}
+body.adjusting .frame.filled img{-webkit-user-drag:none;user-select:none}
+@media print{.adj{display:none!important}}
+.pic{position:absolute;inset:0;overflow:hidden;border-radius:9px}
+#adjBtn{display:none!important}
+#cropM{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;padding:12px;font-family:Poppins,sans-serif}
+#cropM.on{display:flex}
+#cropM .pn{background:#10291c;border:2px solid #f2c14e;border-radius:16px;padding:14px;max-width:96vw;max-height:96vh;display:flex;flex-direction:column;gap:10px;align-items:center;color:#fff}
+#cropM h3{margin:0;font-size:15px;color:#f2c14e;text-align:center}
+#cropM .st{position:relative;touch-action:none;user-select:none;line-height:0;background:#000}
+#cropM .st img{display:block;width:100%;height:100%;pointer-events:none;-webkit-user-drag:none}
+#cropM .bx{position:absolute;border:2px solid #f2c14e;box-shadow:0 0 0 9999px rgba(0,0,0,.62);cursor:move;box-sizing:border-box;background:
+ linear-gradient(rgba(255,255,255,.35),rgba(255,255,255,.35)) 33.33% 0/1px 100% no-repeat,linear-gradient(rgba(255,255,255,.35),rgba(255,255,255,.35)) 66.66% 0/1px 100% no-repeat,linear-gradient(rgba(255,255,255,.35),rgba(255,255,255,.35)) 0 33.33%/100% 1px no-repeat,linear-gradient(rgba(255,255,255,.35),rgba(255,255,255,.35)) 0 66.66%/100% 1px no-repeat}
+#cropM .hd{position:absolute;width:18px;height:18px;background:#f2c14e;border:2px solid #10291c;border-radius:50%}
+#cropM .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;width:100%}
+#cropM input[type=range]{flex:1;min-width:140px;accent-color:#f2c14e}
+#cropM button{font:700 13px Poppins,sans-serif;border:0;border-radius:999px;padding:8px 16px;cursor:pointer;background:#2a4a38;color:#fff}
+#cropM button.pr{background:#f2c14e;color:#1a1a1a}
+@media print{#cropM{display:none!important}}
+.frame .chg{display:none;position:absolute;top:8px;right:8px;z-index:9;font:700 11px Poppins,sans-serif;background:#f2c14e;color:#1a1a1a;border:0;border-radius:999px;padding:5px 10px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.5)}
+.frame.filled .chg{display:block}
+body.pdfing .chg{display:none!important}
+@media print{.chg{display:none!important}}
 </style>
 </head>
 <body>
@@ -109,6 +139,7 @@ body.pl .pgrid .frame img{object-fit:cover}
 <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
 <span style="font-size:13px;color:var(--muted)" id="modeLabel">View mode</span>
 <button class="ghost" id="editBtn">Edit details</button>
+<button class="ghost" id="adjBtn">Adjust photos</button>
 <button class="ghost" id="printBtn">Print</button>
 <button id="pdfBtn">Download PDF</button>
 </div>
@@ -195,13 +226,95 @@ document.querySelectorAll('.frame').forEach(frame => {
     img.src = URL.createObjectURL(file);
     img.onload = () => { frame.style.aspectRatio = img.naturalWidth + ' / ' + img.naturalHeight; fitPrint(); };
     frame.classList.add('filled');
-    frame.insertBefore(img, input);
+    let pic=frame.querySelector('.pic'); if(!pic){pic=document.createElement('div');pic.className='pic';frame.insertBefore(pic,frame.firstChild);} pic.appendChild(img);
     const cap = document.createElement('div');
     cap.className = 'cap';
     cap.textContent = file.name.replace(/\.[^.]+$/, '');
-    frame.appendChild(cap);
+    pic.appendChild(cap);
   });
 });
+
+
+/* ---- Photo adjust: drag to move, zoom to crop ---- */
+let adjusting=false;
+function viewOf(f){return f._v||(f._v={z:1,cx:.5,cy:.5});}
+function applyView(f){
+  const img=f.querySelector('img'); if(!img||!img.naturalWidth) return;
+  const v=viewOf(f), ia=img.naturalWidth/img.naturalHeight, fa=f.clientWidth/f.clientHeight;
+  const minZ=ia>fa?fa/ia:ia/fa; v.z=Math.max(minZ,Math.min(4,v.z));
+  let wp,hp; if(ia>fa){hp=v.z*100;wp=hp*ia/fa;}else{wp=v.z*100;hp=wp*fa/ia;}
+  const pos=(c,s)=>s>=100?Math.max(100-s,Math.min(0,50-c*s)):(100-s)/2;
+  const l=pos(v.cx,wp), t=pos(v.cy,hp);
+  v.cx=wp>=100?(50-l)/wp:.5; v.cy=hp>=100?(50-t)/hp:.5;
+  Object.assign(img.style,{position:'absolute',width:wp+'%',height:hp+'%',left:l+'%',top:t+'%',right:'auto',bottom:'auto',maxWidth:'none',objectFit:'fill'});
+  const r=f.querySelector('.adj input'); if(r){r.min=minZ.toFixed(2);r.max=4;r.value=v.z;f.querySelector('.adj span').textContent=Math.round(v.z*100)+'%';}
+}
+function setAdjusting(on){
+  adjusting=on; document.body.classList.toggle('adjusting',on);
+  document.getElementById('adjBtn').textContent=on?'Done adjusting':'Adjust photos';
+  if(on){ if(editing) setEditing(false); modeLabel.textContent='Drag photo to move - slider or scroll to zoom'; }
+  else modeLabel.textContent=editing?'Edit mode':'View mode';
+}
+document.getElementById('adjBtn').addEventListener('click',()=>setAdjusting(!adjusting));
+document.querySelectorAll('.frame').forEach(f=>{
+  const bar=document.createElement('div'); bar.className='adj';
+  bar.innerHTML='<input type="range" step="0.01" min="1" max="4" value="1"><span>100%</span><button type="button" data-a="fit">Fit</button><button type="button" data-a="reset">Reset</button><button type="button" data-a="new">Change</button>';
+  f.appendChild(bar);
+  const chg=document.createElement('button'); chg.type='button'; chg.className='chg'; chg.textContent='Change photo'; f.appendChild(chg);
+  bar.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const a=e.target.dataset&&e.target.dataset.a;const v=viewOf(f);
+    if(a==='reset'){v.z=1;v.cx=v.cy=.5;applyView(f);} else if(a==='fit'){v.z=0.01;v.cx=v.cy=.5;applyView(f);} else if(a==='new'){f.querySelector('input[type=file]').click();}});
+  bar.querySelector('input').addEventListener('input',e=>{viewOf(f).z=parseFloat(e.target.value);applyView(f);});
+  let d=null;
+  f.addEventListener('click',e=>{ if(e.target.closest('.chg')){ e.preventDefault(); e.stopPropagation(); f.querySelector('input[type=file]').click(); return; } if(e.target.tagName==='INPUT') return; if(f.querySelector('img')){ e.preventDefault(); openCrop(f); } },true);
+  f.addEventListener('pointerdown',e=>{ if(!adjusting||!f.querySelector('img')||e.target.closest('.adj')) return; d={x:e.clientX,y:e.clientY}; f.setPointerCapture(e.pointerId); f.style.cursor='grabbing'; });
+  f.addEventListener('pointermove',e=>{ if(!d) return; const img=f.querySelector('img'), v=viewOf(f);
+    const k=f.getBoundingClientRect().width/f.offsetWidth||1, W=f.clientWidth, H=f.clientHeight;
+    const wpx=parseFloat(img.style.width)/100*W, hpx=parseFloat(img.style.height)/100*H;
+    v.cx-=((e.clientX-d.x)/k)/wpx; v.cy-=((e.clientY-d.y)/k)/hpx; d={x:e.clientX,y:e.clientY}; applyView(f); });
+  const end=()=>{d=null;f.style.cursor='';}; f.addEventListener('pointerup',end); f.addEventListener('pointercancel',end);
+  f.addEventListener('wheel',e=>{ if(!adjusting||!f.querySelector('img')) return; e.preventDefault(); const v=viewOf(f); v.z*=e.deltaY<0?1.06:1/1.06; applyView(f); },{passive:false});
+  const inp=f.querySelector('input[type=file]'); inp.addEventListener('change',()=>{ f._v={z:1,cx:.5,cy:.5}; const im=()=>f.querySelector('img'); setTimeout(function w(){const i=im(); if(i&&i.complete&&i.naturalWidth) applyView(f); else setTimeout(w,50);},50); });
+});
+window.addEventListener('beforeprint',()=>{ if(adjusting) setAdjusting(false); });
+
+
+/* ---- Crop popup ---- */
+const cropM=document.createElement('div');cropM.id='cropM';
+cropM.innerHTML='<div class="pn"><h3>Crop photo - drag the gold box to choose what is included. Drag a corner or use the slider to zoom.</h3><div class="st"><img alt=""><div class="bx"><i class="hd" style="left:-10px;top:-10px;cursor:nwse-resize" data-c="0"></i><i class="hd" style="right:-10px;top:-10px;cursor:nesw-resize" data-c="1"></i><i class="hd" style="left:-10px;bottom:-10px;cursor:nesw-resize" data-c="2"></i><i class="hd" style="right:-10px;bottom:-10px;cursor:nwse-resize" data-c="3"></i></div></div><div class="row"><span>Zoom</span><input type="range" min="1" max="4" step="0.01" value="1"><button data-a="reset">Reset</button><button data-a="new">Change photo</button></div><div class="row"><button data-a="cancel">Cancel</button><button class="pr" data-a="done">Done</button></div></div>';
+document.body.appendChild(cropM);
+let CF=null,CB=null;
+function cropGeom(){const st=cropM.querySelector('.st'),img=st.querySelector('img');const sw=st.clientWidth,sh=st.clientHeight,nw=img.naturalWidth,nh=img.naturalHeight,fa=CF.clientWidth/CF.clientHeight;const vw1=Math.min(nw,nh*fa);return {st,img,sw,sh,nw,nh,fa,m:sw/nw,vw1};}
+function cropDraw(){const g=cropGeom(),b=CB;b.w=Math.max(g.sw/4*0+30,Math.min(b.w,g.sw,g.sh*g.fa));b.h=b.w/g.fa;b.x=Math.max(0,Math.min(g.sw-b.w,b.x));b.y=Math.max(0,Math.min(g.sh-b.h,b.y));
+  const e=cropM.querySelector('.bx');e.style.left=b.x+'px';e.style.top=b.y+'px';e.style.width=b.w+'px';e.style.height=b.h+'px';
+  const maxW=Math.min(g.sw,g.sh*g.fa),z=Math.min(4,Math.max(1,maxW/b.w));cropM.querySelector('input').value=z;}
+function cropZoom(z,cx,cy){const g=cropGeom(),maxW=Math.min(g.sw,g.sh*g.fa);const w=maxW/Math.max(1,Math.min(4,z));cx=cx??CB.x+CB.w/2;cy=cy??CB.y+CB.h/2;CB.w=w;CB.h=w/g.fa;CB.x=cx-w/2;CB.y=cy-CB.h/2;cropDraw();}
+function openCrop(f){
+  const src=f.querySelector('img');if(!src||!src.naturalWidth)return;CF=f;cropM.classList.add('on');
+  const img=cropM.querySelector('.st img'),st=cropM.querySelector('.st');img.src=src.src;
+  const go=()=>{const maxW=Math.min(window.innerWidth*.88,900),maxH=window.innerHeight-210;const m=Math.min(maxW/img.naturalWidth,maxH/img.naturalHeight);st.style.width=img.naturalWidth*m+'px';st.style.height=img.naturalHeight*m+'px';
+    const g=cropGeom(),v=viewOf(f),z=Math.max(1,v.z),vw=g.vw1/z*g.m;CB={w:vw,h:vw/g.fa,x:v.cx*g.sw-vw/2,y:v.cy*g.sh-vw/g.fa/2};cropDraw();};
+  if(img.complete&&img.naturalWidth)go();else img.onload=go;
+}
+function closeCrop(){cropM.classList.remove('on');CF=null;}
+cropM.addEventListener('click',e=>{const a=e.target.dataset&&e.target.dataset.a;if(!a||!CF)return;
+  if(a==='cancel')closeCrop();
+  else if(a==='reset'){const g=cropGeom();CB.w=1e9;CB.x=0;CB.y=0;cropDraw();}
+  else if(a==='new'){const f=CF;closeCrop();f.querySelector('input[type=file]').click();}
+  else if(a==='done'){const g=cropGeom(),v=viewOf(CF);v.z=Math.max(1,g.vw1/(CB.w/g.m));v.cx=(CB.x+CB.w/2)/g.sw;v.cy=(CB.y+CB.h/2)/g.sh;applyView(CF);closeCrop();}});
+cropM.addEventListener('mousedown',e=>{if(e.target===cropM)closeCrop();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&CF)closeCrop();});
+(function(){let d=null;const st=cropM.querySelector('.st');
+  st.addEventListener('pointerdown',e=>{if(!CF)return;const c=e.target.dataset&&e.target.dataset.c;const r=st.getBoundingClientRect();
+    if(c!==undefined&&c!==''){d={t:'r'};}else if(e.target.closest('.bx')){d={t:'m',px:e.clientX,py:e.clientY,bx:CB.x,by:CB.y};}else{CB.x=e.clientX-r.left-CB.w/2;CB.y=e.clientY-r.top-CB.h/2;cropDraw();d={t:'m',px:e.clientX,py:e.clientY,bx:CB.x,by:CB.y};}
+    st.setPointerCapture(e.pointerId);e.preventDefault();});
+  st.addEventListener('pointermove',e=>{if(!d||!CF)return;const r=st.getBoundingClientRect();
+    if(d.t==='m'){CB.x=d.bx+(e.clientX-d.px);CB.y=d.by+(e.clientY-d.py);cropDraw();}
+    else{const cx=CB.x+CB.w/2,cy=CB.y+CB.h/2,g=cropGeom();const px=e.clientX-r.left,py=e.clientY-r.top;const w=Math.max(2*Math.abs(px-cx),2*Math.abs(py-cy)*g.fa);cropZoom(Math.min(g.sw,g.sh*g.fa)/Math.max(30,w),cx,cy);}});
+  const end=()=>{d=null};st.addEventListener('pointerup',end);st.addEventListener('pointercancel',end);
+  st.addEventListener('wheel',e=>{if(!CF)return;e.preventDefault();const g=cropGeom(),z=Math.min(g.sw,g.sh*g.fa)/CB.w;cropZoom(z*(e.deltaY<0?1.08:1/1.08));},{passive:false});
+  cropM.querySelector('input').addEventListener('input',e=>{if(CF)cropZoom(parseFloat(e.target.value));});
+})();
+window.addEventListener('beforeprint',()=>{if(CF)closeCrop();});
 
 document.body.classList.add('pl');
 function sizeSheet(){ const z = Math.min(1.5, Math.max(.4, (window.innerWidth - 24) / 816)); document.getElementById('sheet').style.zoom = z; }
@@ -217,12 +330,12 @@ function fitPrint(){
 
 window.addEventListener('afterprint', () => { const o=document.getElementById('sheet2'); if(o) o.remove(); sizeSheet(); fitPrint(); });
 sizeSheet(); fitPrint();
-document.getElementById('printBtn').addEventListener('click', () => { if (editing) setEditing(false); window.print(); });
+document.getElementById('printBtn').addEventListener('click', () => { if (editing) setEditing(false); if (adjusting) setAdjusting(false); window.print(); });
 document.getElementById('pdfBtn').addEventListener('click', async () => {
   const btn = document.getElementById('pdfBtn');
-  if (editing) setEditing(false);
+  if (editing) setEditing(false); if (adjusting) setAdjusting(false);
   if (!window.html2canvas || !window.jspdf) { alert('To save as PDF: in the print window that opens, choose Destination = Save as PDF.'); window.print(); return; }
-  btn.disabled = true; btn.textContent = 'Making PDF...';
+  btn.disabled = true; btn.textContent = 'Making PDF...'; document.body.classList.add('pdfing');
   try {
     const sh = document.getElementById('sheet'); const oz = sh.style.zoom; sh.style.zoom = 1; fitPrint();
     await new Promise(r => setTimeout(r, 300));
@@ -234,7 +347,7 @@ document.getElementById('pdfBtn').addEventListener('click', async () => {
     pdf.addImage(im, 'JPEG', 0, 0, 8.5, 5.5); pdf.addImage(im, 'JPEG', 0, 5.5, 8.5, 5.5);
     pdf.save('Yuval-Trucking-Christmas-Party-2026.pdf');
   } catch (e) { alert('To save as PDF: in the print window that opens, choose Destination = Save as PDF.'); window.print(); }
-  btn.disabled = false; btn.textContent = 'Download PDF';
+  document.body.classList.remove('pdfing'); btn.disabled = false; btn.textContent = 'Download PDF';
 });
 </script>
 </body>
